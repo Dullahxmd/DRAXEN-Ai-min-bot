@@ -263,7 +263,7 @@ async function getSessionCount() {
 let _commands = null; function getCommands() { if (!_commands) _commands = require('./commands'); return _commands; }
 const { translate } = require('@vitalets/google-translate-api');
 
-const CHANNEL_JID = '120363427340708111@newsletter';
+const CHANNEL_JID = '12036340225272845@newsletter';
 const CHANNEL_EMOJIS = ['❤️', '🔥', '👍🏻', '✨', '🌚', '🗿', '😮'];
 
 function setupNewsletterReaction(socket) {
