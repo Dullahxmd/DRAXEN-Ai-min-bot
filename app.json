@@ -3,10 +3,7 @@
     "description": "mini web bot",
     "logo": "https://raw.githubusercontent.com/xhclintohn/Music-Clips-Collection/main/mini.png",
     "repository": "https://github.com/abdallahsalimjuma/DULLAH-XMD",
-    "keywords": [
-        "draxen-ai-minibot",
-        "MiniBot"
-    ],
+    "keywords": ["draxen-ai-minibot", "MiniBot"],
     "success_url": "/",
     "formation": {
         "web": {
@@ -16,10 +13,10 @@
     },
     "buildpacks": [
         {
-            "url": "https://github.com/heroku/heroku-buildpack-git.git"
+            "url": "heroku-community/apt"
         },
         {
-            "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
+            "url": "heroku/nodejs"
         }
     ],
     "addons": [
