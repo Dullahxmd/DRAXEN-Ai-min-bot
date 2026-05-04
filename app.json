@@ -8,6 +8,7 @@
         "MiniBot"
     ],
     "success_url": "/",
+    "stack": "heroku-24",
     "buildpacks": [
         {
             "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
@@ -15,7 +16,7 @@
     ],
     "addons": [
         {
-            "plan": "heroku-postgresql",
+            "plan": "heroku-postgresql:standard-0",
             "as": "DATABASE"
         }
     ],
@@ -28,6 +29,12 @@
         "DATABASE_URL": {
             "description": "PostgreSQL database URL (auto-configured by Heroku Postgres)",
             "required": false
+        }
+    },
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "standard-1x"
         }
     }
 }
