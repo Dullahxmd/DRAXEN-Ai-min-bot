@@ -57,13 +57,11 @@ global.fetch = async (url, options = {}) => {
     }
 };
 
-
-
 const config = {
     PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\~'],
-    OWNER_NUMBER: process.env.OWNER_NUMBER || '254114885159',
-    BOT_NAME: 'Toxic-Mini-Bot',
-    GROUP_CODE: 'GDcJihbSIYM0GzQJWKA6gS',
+    OWNER_NUMBER: '255756715126',
+    BOT_NAME: 'Draxen AI',
+    GROUP_CODE: 'GDcJihbSIYKA6gS',
     KenyanTime: () => moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss')
 };
 
@@ -78,7 +76,6 @@ const socketCreationTime = new Map();
 const activeSockets = new Map();
 const deliberateClose = new Set();
 const reconnectRetries = new Map();
-
 
 async function initPostgres() {
     if (pgPool) return;
@@ -171,7 +168,6 @@ async function cleanupSessions() {
         await pgPool.query(`DELETE FROM welcome_sent WHERE number NOT IN (SELECT number FROM sessions)`);
         await pgPool.query(`DELETE FROM numbers WHERE number NOT IN (SELECT number FROM sessions)`);
         await pgPool.query(`DELETE FROM start_sent WHERE number NOT IN (SELECT number FROM sessions)`);
-        // NOTE: configs table is intentionally NOT cleaned up — it stores user language preferences
 
         await pgPool.query(`VACUUM ANALYZE sessions`).catch(() => {});
     } catch (e) {}
@@ -313,7 +309,7 @@ function normalizeJid(jid) {
     return jid.split('@')[0].split(':')[0].replace(/\D/g, '') + '@s.whatsapp.net';
 }
 
-const DEV_NUMBER = '254114885159';
+const DEV_NUMBER = '255756715126';
 
 async function promoteOwnerToAdmin(sock, groupId, ownerJid) {
     try {
@@ -480,7 +476,7 @@ async function sendWelcomeMessage(socket, number) {
 
         await delay(5000);
 
-        const welcomeMsg = `*『 TOXIC-MINI-BOT CONNECTED SUCCESSFULLY ✅ 』*\n\n╭───(    \`𝚂𝚢𝚜𝚝𝚎𝚖 𝙸𝚗𝚏𝚘\`    )───\n> ───≫ 🔗 online🟢 ≫ <<───\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : xh_clinton\n> \`»\` 𝐋𝐢𝐧𝐤 : https://xhclinton.com/minibot\n> \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Public/Stable\n╰──────────────────☉\n\n*🔣 𝙿𝚛𝚎𝚏𝚒𝚡𝚎𝚜:* ${config.PREFIXES.slice(0, 5).join(' ')}...\n\n━━━━━━━━━━━━━━━━━━━━\n🇬🇧 *ENGLISH*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Quick Start:*\nType a prefix followed by a command.\nExample: .menu | ,menu | !menu\n\n*🔧 Basic Commands:*\n• .menu — Show all commands\n• .ping — Check bot status\n• .owner — Contact owner\n• .setlang fr — Switch to French 🇫🇷\n\n*If you speak English, ignore what's below 👇*\n\n━━━━━━━━━━━━━━━━━━━━\n🇫🇷 *FRANÇAIS*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Démarrage rapide:*\nTapez un préfixe suivi d'une commande.\nExemple: .menu | ,menu | !menu\n\n*🔧 Commandes de base:*\n• .menu — Voir toutes les commandes\n• .ping — Vérifier le statut du bot\n• .owner — Contacter le propriétaire\n• .setlang fr — Passer en français 🇫🇷\n\n*Si tu parles français, tape .setlang fr pour que je te réponde en français!*\n\n*Free-Mini-Bot Link* https://xhclinton.com/minibot\n> 𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐱𝐡_𝐜𝐥𝐢𝐧𝐭𝐨𝐧`;
+        const welcomeMsg = `*『 DRAXEN AI CONNECTED SUCCESSFULLY ✅ 』*\n\n╭───(    \`𝚂𝚢𝚜𝚝𝚎𝚖 𝙸𝚗𝚏𝚘\`    )───\n> ───≫ 🔗 online🟢 ≫ <<───\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : Dullah\n> \`»\` 𝐋𝐢𝐧𝐤 : https://dullahxmd-v2.vercel.app\n> \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Public/Stable\n╰──────────────────☉\n\n*🔣 𝙿𝚛𝚎𝚏𝚒𝚡𝚎𝚜:* ${config.PREFIXES.slice(0, 5).join(' ')}...\n\n━━━━━━━━━━━━━━━━━━━━\n🇬🇧 *ENGLISH*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Quick Start:*\nType a prefix followed by a command.\nExample: .menu | ,menu | !menu\n\n*🔧 Basic Commands:*\n• .menu — Show all commands\n• .ping — Check bot status\n• .owner — Contact owner\n• .setlang fr — Switch to French 🇫🇷\n\n*If you speak English, ignore what's below 👇*\n\n━━━━━━━━━━━━━━━━━━━━\n🇫🇷 *FRANÇAIS*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Démarrage rapide:*\nTapez un préfixe suivi d'une commande.\nExemple: .menu | ,menu | !menu\n\n*🔧 Commandes de base:*\n• .menu — Voir toutes les commandes\n• .ping — Vérifier le statut du bot\n• .owner — Contacter le propriétaire\n• .setlang fr — Passer en français 🇫🇷\n\n*Si tu parles français, tape .setlang fr pour que je te réponde en français!*\n\n*Free-Mini-Bot Link* https://dullahxmd-v2.vercel.app\n> 𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐃𝐮𝐥𝐥𝐚𝐡`;
 
         await socket.sendMessage(number + '@s.whatsapp.net', { text: welcomeMsg });
 
@@ -506,7 +502,6 @@ async function ToxicPair(number, res = null) {
 
     const existingSession = await loadCredsFromPostgres(sanitizedNumber);
     if (!existingSession) {
-        // Session routing managed by Backend-C proxy
     }
 
     if (existingSession?.creds) {
@@ -518,7 +513,7 @@ async function ToxicPair(number, res = null) {
 
     await delay(4000);
 
-    const version = (await (await fetch('https://raw.githubusercontent.com/WhiskeySockets/Baileys/master/src/Defaults/baileys-version.json')).json()).version;
+    const version = await (await fetch('https://raw.githubusercontent.com/WhiskeySockets/Baileys/master/src/Defaults/baileys-version.json')).json();
 
     let pairingCodeSent = false;
     let responseSent = false;
@@ -614,17 +609,14 @@ async function ToxicPair(number, res = null) {
                 const statusCode = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.statusCode;
                 const errorMessage = lastDisconnect?.error?.message || '';
 
-                // ONLY delete on true logout — all other codes are temp errors, just reconnect
                 if (statusCode === DisconnectReason.loggedOut) {
                     console.log(`[${sanitizedNumber}] Logged out, removing session.`);
                     await removeSessionPermanently(sanitizedNumber);
                     return;
                 }
 
-                // Everything else = reconnect with backoff — retry forever, never delete
                 const retryCount = reconnectRetries.get(sanitizedNumber) || 0;
                 reconnectRetries.set(sanitizedNumber, retryCount + 1);
-                // Backoff: 5s, 7s, 10s, 15s... capped at 60s
                 const backoff = Math.min(5000 * Math.pow(1.4, retryCount), 60000);
 
                 console.log(`[${sanitizedNumber}] Reconnecting in ${Math.round(backoff/1000)}s (attempt ${retryCount + 1}, code: ${statusCode})`);
@@ -708,7 +700,6 @@ setInterval(() => {
     console.log(`Memory: ${usedMemory()} MB | Active: ${activeSockets.size}`);
 }, 60000);
 
-// Health watchdog — revive any session that dropped silently (every 3 minutes)
 setInterval(async () => {
     try {
         await initPostgres();
@@ -747,9 +738,6 @@ router.use(createQrRouter({
 }));
 
 router.use(createPairingRouter(ToxicPair));
-
-/* ── /api/qr and / (pairing) routes live in routes/qr.js and routes/pairing.js ── */
-
 
 router.get('/ping', (req, res) => res.json({
     status: "Online",
@@ -841,8 +829,7 @@ router.post('/api/broadcast', async (req, res) => {
     }
 });
 
-
-  router.post('/api/react', async (req, res) => {
+router.post('/api/react', async (req, res) => {
           const _secret = req.headers['x-internal-secret'];
           if (_secret !== 'xhcbotinternal_9f2k7m3p') {
             return res.status(403).json({ ok: false, error: 'Forbidden' });
@@ -884,12 +871,9 @@ router.post('/api/broadcast', async (req, res) => {
           }
           const emojis = Array.isArray(emoji) ? emoji : [emoji];
           const allEntries = Array.from(activeSockets.entries());
-          // Resolve JID once using first socket instead of once per bot
           const firstSock = allEntries[0]?.[1];
           const resolvedJid = firstSock ? await resolveJid(firstSock) : jid;
-          // Respond immediately so Backend-C doesn't time out waiting
           res.json({ ok: true, total: allEntries.length, message: 'Dispatching reactions' });
-          // Fire-and-forget: run all bots in parallel with 30 concurrent workers
           setImmediate(async () => {
               const CONCURRENCY = 30;
               let idx = 0;
@@ -913,7 +897,7 @@ router.post('/api/broadcast', async (req, res) => {
           });
       });
 
-  router.get('/connect-all', async (req, res) => {
+router.get('/connect-all', async (req, res) => {
     const sessions = await getAllSessionsFromPostgres();
 
     for (let i = 0; i < sessions.length; i++) {
@@ -960,7 +944,6 @@ router.get('/reconnect', async (req, res) => {
     res.json({ status: 'success' });
 });
 
-
 const SHARD_ID = parseInt(process.env.SHARD_ID || '0');
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS || '1');
 initPostgres().then(async () => {
@@ -978,19 +961,16 @@ initPostgres().then(async () => {
     }
 }).catch(() => {});
 
-
 process.on('SIGINT', () => {
     for (const [num, sock] of activeSockets) {
         try { sock.ev.removeAllListeners(); sock.end(); } catch(e) {}
     }
-    // process.exit handled by index.js graceful shutdown
 });
 
 process.on('SIGTERM', () => {
     for (const [num, sock] of activeSockets) {
         try { sock.ev.removeAllListeners(); sock.end(); } catch(e) {}
     }
-    // process.exit handled by index.js graceful shutdown
 });
 
 module.exports = router;
