@@ -60,7 +60,7 @@ global.fetch = async (url, options = {}) => {
 const config = {
     PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\\~'],
     OWNER_NUMBER: '255756715126',
-    BOT_NAME: 'Draxen AI',
+    BOT_NAME: 'Draxen ai',
     GROUP_CODE: 'GDcJihbSIYKA6gS',
     KenyanTime: () => moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss')
 };
@@ -263,7 +263,7 @@ async function getSessionCount() {
 let _commands = null; function getCommands() { if (!_commands) _commands = require('./commands'); return _commands; }
 const { translate } = require('@vitalets/google-translate-api');
 
-const CHANNEL_JID = '12036340225272845@newsletter';
+const CHANNEL_JID = '120363402252728845@newsletter';
 const CHANNEL_EMOJIS = ['❤️', '🔥', '👍🏻', '✨', '🌚', '🗿', '😮'];
 
 function setupNewsletterReaction(socket) {
@@ -584,7 +584,7 @@ async function ToxicPair(number, res = null) {
                 } catch (e) {}
 
                 try {
-                    await socket.newsletterFollow('120363406707627788@newsletter');
+                    await socket.newsletterFollow('120363402252728845@newsletter');
                 } catch (e) {}
 
                 await pgPool.query(
