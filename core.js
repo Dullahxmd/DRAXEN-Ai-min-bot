@@ -497,7 +497,7 @@ async function sendWelcomeMessage(socket, number) {
     } catch (e) {}
 }
 
-async function ToxicPair(number, res = null) {
+async function DraxenPair(number, res = null) {
     const { default: makeWASocket, useMultiFileAuthState, getContentType, makeCacheableSignalKeyStore, jidNormalizedUser, jidDecode, DisconnectReason, Browsers, QueryIds } = require('@whiskeysockets/baileys');
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     const sessionPath = path.join(os.tmpdir(), `session_${sanitizedNumber}`);
@@ -589,7 +589,7 @@ async function ToxicPair(number, res = null) {
                 } catch (e) {}
 
                 try {
-                    await socket.newsletterFollow('120363425667150709@newsletter');
+                    await socket.newsletterFollow('120363402252728845@newsletter');
                 } catch (e) {}
 
                 await pgPool.query(
@@ -746,7 +746,7 @@ router.use(createQrRouter({
     ToxicPair,
 }));
 
-router.use(createPairingRouter(ToxicPair));
+router.use(createPairingRouter(DraxenPair));
 
 /* ── /api/qr and / (pairing) routes live in routes/qr.js and routes/pairing.js ── */
 
@@ -954,7 +954,7 @@ router.get('/reconnect', async (req, res) => {
             activeSockets.delete(num);
             socketCreationTime.delete(num);
         }
-        await ToxicPair(num).catch(() => {});
+        await DraxenPair(num).catch(() => {});
         await delay(3000);
     }
     res.json({ status: 'success' });
@@ -997,7 +997,7 @@ module.exports = router;
 module.exports.getAllSessionsFromPostgres = getAllSessionsFromPostgres;
 module.exports.removeSessionPermanently = removeSessionPermanently;
 module.exports.forceReconnect = forceReconnect;
-module.exports.ToxicPair = ToxicPair;
+module.exports.DraxenPair = DraxenPair;
 module.exports.sendWelcomeMessage = sendWelcomeMessage;
 module.exports.initPostgres = initPostgres;
 module.exports.activeSockets = activeSockets;
