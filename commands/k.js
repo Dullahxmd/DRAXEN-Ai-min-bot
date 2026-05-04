@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const normalizeNum = (jid) => {
     if (!jid) return '';
@@ -40,9 +41,9 @@ module.exports = {
         const isDev = extras?.isDev || false;
         const botNumber = extras?.botNumber || '';
 
-        if (!isGroup) return socket.sendMessage(from, { text: '*This only works in groups.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me an admin first.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*Only admins can use this command.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!isGroup) return socket.sendMessage(from, { text: '*This only works in groups.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me an admin first.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*Only admins can use this command.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const metadata = extras?.groupMetadata || await socket.groupMetadata(from).catch(() => null);
         const participants = metadata?.participants || [];
@@ -58,26 +59,26 @@ module.exports = {
             if (args[0]) rawJid = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net';
         }
 
-        if (!rawJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to kick.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!rawJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to kick.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const targetJid = resolveTarget(rawJid, participants);
-        if (!targetJid) return socket.sendMessage(from, { text: '*Could not find that user in this group.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!targetJid) return socket.sendMessage(from, { text: '*Could not find that user in this group.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const targetNum = targetJid.split('@')[0];
         const botNum = normalizeNum(botNumber);
 
-        if (targetNum === botNum) return socket.sendMessage(from, { text: '*You want me to kick myself? How about no.*' + FOOTER }, { quoted: fakeQuoted });
+        if (targetNum === botNum) return socket.sendMessage(from, { text: '*You want me to kick myself? How about no.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const senderNum = normalizeNum(sender);
 
         try {
             await socket.groupParticipantsUpdate(from, [targetJid], 'remove');
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐊𝐢𝐜𝐤𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${targetNum}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Removed from the group.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Pack your bags and get out.*` + FOOTER,
+                text: `╭───(    \`𝐊𝐢𝐜𝐤𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${targetNum}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Removed from the group.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Pack your bags and get out.*` + FOOTER + PAIR_LINK,
                 mentions: [targetJid, sender]
             }, { quoted: fakeQuoted });
         } catch (error) {
-            await socket.sendMessage(from, { text: '*Failed to kick that user.*' + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: '*Failed to kick that user.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

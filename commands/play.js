@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'play',
@@ -17,8 +18,8 @@ module.exports = {
             const query = body.split(' ').slice(1).join(' ').trim();
 
             if (!query) {
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: "Give me a song name, you tone-deaf cretin. I can't play silence." + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: "Give me a song name, you tone-deaf cretin. I can't play silence." + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -52,8 +53,8 @@ module.exports = {
 
             if (!success || !audioUrl) {
                 await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: `No song found for "${query}". Your music taste is as bad as your search skills.` + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: `No song found for "${query}". Your music taste is as bad as your search skills.` + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -63,21 +64,19 @@ module.exports = {
                 audio: { url: audioUrl },
                 mimetype: "audio/mpeg",
                 fileName: `${filename}.mp3`,
-
             }, { quoted: fakeQuoted });
 
             await socket.sendMessage(msg.key.remoteJid, {
                 document: { url: audioUrl },
                 mimetype: "audio/mpeg",
                 fileName: `${filename.replace(/[<>:"/\\|?*]/g, '_')}.mp3`,
-                caption: `🎵 *${filename}*\n—\n*DRAXEN-Ai*\n\n\n> Draxen is fast`
+                caption: `🎵 *${filename}*\n—\n*DRAXEN-Ai*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (error) {
-            console.error('YouTube error:', error);
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-            await socket.sendMessage(msg.key.remoteJid, { 
-                text: `YouTube download failed. The universe rejects your music taste.\nError: ${error.message}` + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: `YouTube download failed. The universe rejects your music taste.\nError: ${error.message}` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

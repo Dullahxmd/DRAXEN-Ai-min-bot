@@ -1,5 +1,6 @@
 
-const FOOTER = '\n\n*Free-Mini-Bot Link* https://xhclinton.com/minibot\n> 𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐱𝐡_𝐜𝐥𝐢𝐧𝐭𝐨𝐧';
+const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'add',
@@ -19,19 +20,19 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*This is not a group. Where exactly do you want me to add someone?*' + FOOTER
+                text: '*This is not a group. Where exactly do you want me to add someone?*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isBotAdmin) {
             return socket.sendMessage(from, {
-                text: `╭───(    \`𝐀𝐝𝐝 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need to be an admin to add people.\n> Promote me first, genius.\n╰──────────────────☉` + FOOTER
+                text: `╭───(    \`𝐀𝐝𝐝 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need to be an admin to add people.\n> Promote me first, genius.\n╰──────────────────☉` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isAdmin) {
             return socket.sendMessage(from, {
-                text: '*Only admins can add people. Stop trying to play boss.*' + FOOTER
+                text: '*Only admins can add people. Stop trying to play boss.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -41,14 +42,14 @@ module.exports = {
 
             if (!args[0]) {
                 return socket.sendMessage(from, {
-                    text: `╭───(    \`𝐀𝐝𝐝 𝐔𝐬𝐚𝐠𝐞\`    )───\n> *𝐅𝐨𝐫𝐦𝐚𝐭:* .add <number>\n> *𝐄𝐱𝐚𝐦𝐩𝐥𝐞:* .add 254712345678\n> Use country code, no + sign.\n╰──────────────────☉\n\n*Is it really that hard to follow instructions?*` + FOOTER
+                    text: `╭───(    \`𝐀𝐝𝐝 𝐔𝐬𝐚𝐠𝐞\`    )───\n> *𝐅𝐨𝐫𝐦𝐚𝐭:* .add <number>\n> *𝐄𝐱𝐚𝐦𝐩𝐥𝐞:* .add 254712345678\n> Use country code, no + sign.\n╰──────────────────☉\n\n*Is it really that hard to follow instructions?*` + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
             const num = args[0].replace(/[^0-9]/g, '');
             if (!num || num.length < 6) {
                 return socket.sendMessage(from, {
-                    text: '*That number looks fake. Try a real one with the country code.*' + FOOTER
+                    text: '*That number looks fake. Try a real one with the country code.*' + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -62,28 +63,28 @@ module.exports = {
                     const inviteCode = await socket.groupInviteCode(from);
                     const inviteLink = `https://chat.whatsapp.com/${inviteCode}`;
                     await socket.sendMessage(targetJid, {
-                        text: `*You have been invited to join a group.*\n\n${inviteLink}` + FOOTER
+                        text: `*You have been invited to join a group.*\n\n${inviteLink}` + FOOTER + PAIR_LINK
                     });
                     await socket.sendMessage(from, {
-                        text: `╭───(    \`𝐈𝐧𝐯𝐢𝐭𝐞 𝐒𝐞𝐧𝐭\`    )───\n> *𝐔𝐬𝐞𝐫:* @${num}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Could not add directly.\n> *𝐀𝐜𝐭𝐢𝐨𝐧:* Invite link sent to DM.\n╰──────────────────☉\n\n*Their privacy settings blocked the add. An invite was sent instead. Not my fault they are paranoid.*` + FOOTER,
+                        text: `╭───(    \`𝐈𝐧𝐯𝐢𝐭𝐞 𝐒𝐞𝐧𝐭\`    )───\n> *𝐔𝐬𝐞𝐫:* @${num}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Could not add directly.\n> *𝐀𝐜𝐭𝐢𝐨𝐧:* Invite link sent to DM.\n╰──────────────────☉\n\n*Their privacy settings blocked the add. An invite was sent instead. Not my fault they are paranoid.*` + FOOTER + PAIR_LINK,
                         mentions: [targetJid]
                     }, { quoted: fakeQuoted });
                 } catch (e) {
                     await socket.sendMessage(from, {
-                        text: `*Failed to add @${num}. Their privacy settings are tighter than Fort Knox.*` + FOOTER,
+                        text: `*Failed to add @${num}. Their privacy settings are tighter than Fort Knox.*` + FOOTER + PAIR_LINK,
                         mentions: [targetJid]
                     }, { quoted: fakeQuoted });
                 }
             } else {
                 await socket.sendMessage(from, {
-                    text: `╭───(    \`𝐀𝐝𝐝𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${num}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Successfully added.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Welcome to the chaos. Try not to be boring.*` + FOOTER,
+                    text: `╭───(    \`𝐀𝐝𝐝𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${num}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Successfully added.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Welcome to the chaos. Try not to be boring.*` + FOOTER + PAIR_LINK,
                     mentions: [targetJid, sender]
                 }, { quoted: fakeQuoted });
             }
 
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to add that user. Blame WhatsApp, not me.*' + FOOTER
+                text: '*Failed to add that user. Blame WhatsApp, not me.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

@@ -3,10 +3,11 @@ const fs = require('fs');
 const path = require('path');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 async function generateProfilePicture(imageBuffer) {
     const sharp = require('sharp');
-    
+
     const { data, info } = await sharp(imageBuffer)
         .resize(640, 640, {
             fit: 'contain',
@@ -14,7 +15,7 @@ async function generateProfilePicture(imageBuffer) {
         })
         .jpeg({ quality: 90 })
         .toBuffer({ resolveWithObject: true });
-    
+
     return { img: data };
 }
 
@@ -26,7 +27,7 @@ module.exports = {
         if (number !== owner && number !== botJid.split('@')[0]) return;
 
         const quoted = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage;
-        if (!quoted || !quoted.imageMessage) return socket.sendMessage(msg.key.remoteJid, { text: "Reply to an image, genius. How hard is that?" + FOOTER });
+        if (!quoted || !quoted.imageMessage) return socket.sendMessage(msg.key.remoteJid, { text: "Reply to an image, genius. How hard is that?" + FOOTER + PAIR_LINK });
 
         try {
             const stream = await downloadContentFromMessage(quoted.imageMessage, 'image');
@@ -51,9 +52,9 @@ module.exports = {
                 ]
             });
 
-            await socket.sendMessage(msg.key.remoteJid, { text: "✅ *Profile Picture Updated. Looking dangerous.* Now admire it and stop bothering me." + FOOTER });
+            await socket.sendMessage(msg.key.remoteJid, { text: "✅ *Profile Picture Updated. Looking dangerous.* Now admire it and stop bothering me." + FOOTER + PAIR_LINK });
         } catch (e) {
-            await socket.sendMessage(msg.key.remoteJid, { text: `Error: ${e.message}` + FOOTER });
+            await socket.sendMessage(msg.key.remoteJid, { text: `Error: ${e.message}` + FOOTER + PAIR_LINK });
         }
     }
 };

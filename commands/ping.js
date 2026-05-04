@@ -1,7 +1,5 @@
-const fs = require('fs');
-const path = require('path');
-
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'ping',
@@ -21,20 +19,17 @@ module.exports = {
 
         const text = `*📡 ${botName} Pɪɴɢ Nᴏᴡ*
 
-╭───(    \`DRAXEN-Ai-Mini 𝐒𝐭𝐚𝐭𝐬\`    )───
+╭───(    \`𝐓𝐨𝐱𝐢𝐜-𝐌𝐢𝐧𝐢 𝐒𝐭𝐚𝐭𝐬\`    )───
 > ───≫ ⚡ Pɪɴɢ ⚡ <<───
-
-*FREE MINI-BOT PAIR LINK*
-
 
 > \`»\` 𝐋𝐚𝐭𝐞𝐧𝐜𝐲 : ${latency}ms
 > \`»\` 𝐒𝐞𝐫𝐯𝐞𝐫 𝐓𝐢𝐦𝐞 : ${new Date().toLocaleString()}
 ╰──────────────────☉
 
-*Took you long enough to check. I am faster than your brain anyway.*\n\n\n> Draxen is fast`;
+*Took you long enough to check. I am faster than your brain anyway.*`;
 
-await socket.sendMessage(msg.key.remoteJid, {
-            text: text
+        await socket.sendMessage(msg.key.remoteJid, {
+            text: text + FOOTER + PAIR_LINK
         }, { quoted: fakeQuoted });
     }
 };

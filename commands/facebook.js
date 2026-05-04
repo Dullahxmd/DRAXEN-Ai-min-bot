@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'fbdl',
@@ -14,9 +15,9 @@ module.exports = {
         const args = text.trim().split(/\s+/);
         const url = args[1];
 
-if (!url || (!url.includes("facebook.com") && !url.includes("fb.watch"))) {
-            return socket.sendMessage(msg.key.remoteJid, { 
-                text: "Give me a valid Facebook link, you absolute potato. I don't have all day." + FOOTER 
+        if (!url || (!url.includes("facebook.com") && !url.includes("fb.watch"))) {
+            return socket.sendMessage(msg.key.remoteJid, {
+                text: "Give me a valid Facebook link, you absolute potato. I don't have all day." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -33,7 +34,7 @@ if (!url || (!url.includes("facebook.com") && !url.includes("fb.watch"))) {
 
             if (!data.status || !data.result || data.result.length === 0) {
                 await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-                return socket.sendMessage(msg.key.remoteJid, { text: "No video found. This link is as empty as your head." + FOOTER }, { quoted: fakeQuoted });
+                return socket.sendMessage(msg.key.remoteJid, { text: "No video found. This link is as empty as your head." + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
             }
 
             const videos = data.result;
@@ -51,22 +52,19 @@ if (!url || (!url.includes("facebook.com") && !url.includes("fb.watch"))) {
 > \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Success
 ╰──────────────────☉
 
-*Downloaded by ${botName}*
-
-
-> Draxen is fast`;
+*Downloaded by ${botName}*`;
 
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '✅', key: msg.key } });
 
             await socket.sendMessage(msg.key.remoteJid, {
                 video: { url: videoToUse.url },
-                caption: caption + FOOTER
+                caption: caption + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (error) {
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-            await socket.sendMessage(msg.key.remoteJid, { 
-                text: "Facebook download failed harder than your IQ. Try again or touch grass." + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: "Facebook download failed harder than your IQ. Try again or touch grass." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

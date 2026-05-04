@@ -1,7 +1,5 @@
-const fs = require('fs');
-const path = require('path');
-
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'speed',
@@ -28,10 +26,10 @@ module.exports = {
 > \`»\` 𝐀𝐜𝐭𝐯. 𝐒𝐞𝐬𝐬𝐢𝐨𝐧𝐬 : ${activeSockets.size}
 ╰──────────────────☉
 
-*Took you long enough to check. I am faster than your response time anyway.*\n\n\n> Draxen is fast`;
+*Took you long enough to check. I am faster than your response time anyway.*`;
 
-await socket.sendMessage(msg.key.remoteJid, {
-            text: text
+        await socket.sendMessage(msg.key.remoteJid, {
+            text: text + FOOTER + PAIR_LINK
         }, { quoted: fakeQuoted });
     }
 };

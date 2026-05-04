@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const normalizeJid = (jid) => {
     if (!jid) return '';
@@ -16,7 +17,7 @@ module.exports = {
         };
         try {
             const from = extras?.from || msg.key.remoteJid;
-            if (!from.endsWith('@g.us')) return socket.sendMessage(from, { text: 'This command only works in groups.' + FOOTER }, { quoted: fakeQuoted });
+            if (!from.endsWith('@g.us')) return socket.sendMessage(from, { text: 'This command only works in groups.' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
             const metadata = extras?.groupMetadata || await socket.groupMetadata(from);
             const participants = metadata.participants;
@@ -36,9 +37,9 @@ module.exports = {
                 `*Stop ignoring the notifications.*`
             ].join('\n');
 
-            await socket.sendMessage(from, { text: txt + FOOTER, mentions }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: txt + FOOTER + PAIR_LINK, mentions }, { quoted: fakeQuoted });
         } catch (error) {
-            await socket.sendMessage(msg.key.remoteJid, { text: 'Failed to tag everyone.' + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(msg.key.remoteJid, { text: 'Failed to tag everyone.' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

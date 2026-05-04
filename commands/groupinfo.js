@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'groupinfo',
@@ -16,7 +17,7 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*There is no group info in a DM. Obviously.*' + FOOTER
+                text: '*There is no group info in a DM. Obviously.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -46,7 +47,7 @@ module.exports = {
 ${adminList}
 ╰──────────────────☉
 
-*There you go. Now you know everything about this place. Happy?*` + FOOTER;
+*There you go. Now you know everything about this place. Happy?*` + FOOTER + PAIR_LINK;
 
             const mentions = admins.map(a => a.jid || a.id);
             if (ownerJid) mentions.push(ownerJid);
@@ -55,7 +56,7 @@ ${adminList}
 
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to get group info. The group is hiding its secrets from me.*' + FOOTER
+                text: '*Failed to get group info. The group is hiding its secrets from me.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

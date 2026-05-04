@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'image',
@@ -14,9 +15,9 @@ module.exports = {
         const args = text.trim().split(/\s+/);
         const query = args.slice(1).join(' ');
 
-if (!query) {
-            return socket.sendMessage(msg.key.remoteJid, { 
-                text: "Are you visually impaired? Give me a search term for Pinterest." + FOOTER 
+        if (!query) {
+            return socket.sendMessage(msg.key.remoteJid, {
+                text: "Are you visually impaired? Give me a search term for Pinterest." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -29,8 +30,8 @@ if (!query) {
 
             if (!data.status || !data.data || data.data.length === 0) {
                 await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: `Pinterest has nothing for "${query}". Your search is as empty as your future.` + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: `Pinterest has nothing for "${query}". Your search is as empty as your future.` + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -39,24 +40,23 @@ if (!query) {
             const images = data.data;
             for (let i = 0; i < images.length; i++) {
                 const img = images[i];
-                
-                const caption = i === 0 
+
+                const caption = i === 0
                     ? `*『 𝙿𝙸𝙽𝚃𝙴𝚁𝙴𝚂𝚃 𝚂𝙴𝙰𝚁𝙲𝙷 』*\n\n╭───(    \`𝚁𝚎𝚜𝚞𝚕𝚝𝚜\`    )───\n> \`»\` 𝐐𝐮𝐞𝐫𝐲 : ${query}\n> \`»\` 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐫 : ${img.fullname || 'Unknown'}\n╰──────────────────☉`
                     : `> \`»\` 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐫 : ${img.fullname || 'Unknown'}`;
 
                 await socket.sendMessage(msg.key.remoteJid, {
                     image: { url: img.image },
-                    caption: caption + FOOTER
+                    caption: caption + FOOTER + PAIR_LINK
                 }, { quoted: i === 0 ? msg : null });
 
-                // Small delay to prevent the bot from getting flagged for spamming images
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
         } catch (error) {
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-            await socket.sendMessage(msg.key.remoteJid, { 
-                text: "Pinterest API bit the dust. Try again or go touch some grass." + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: "Pinterest API bit the dust. Try again or go touch some grass." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

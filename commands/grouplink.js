@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'grouplink',
@@ -17,19 +18,19 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*There is no group link in a DM. Are you lost?*' + FOOTER
+                text: '*There is no group link in a DM. Are you lost?*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isBotAdmin) {
             return socket.sendMessage(from, {
-                text: `╭───(    \`𝐋𝐢𝐧𝐤 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need admin rights to fetch the link.\n> Promote me first.\n╰──────────────────☉` + FOOTER
+                text: `╭───(    \`𝐋𝐢𝐧𝐤 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need admin rights to fetch the link.\n> Promote me first.\n╰──────────────────☉` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isAdmin) {
             return socket.sendMessage(from, {
-                text: '*Only admins can get the group link. Ask nicely next time.*' + FOOTER
+                text: '*Only admins can get the group link. Ask nicely next time.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -37,11 +38,11 @@ module.exports = {
             const metadata = extras?.groupMetadata || await socket.groupMetadata(from).catch(() => null);
             const inviteCode = await socket.groupInviteCode(from);
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤\`    )───\n> *𝐆𝐫𝐨𝐮𝐩:* ${metadata?.subject || 'Unknown'}\n> *𝐌𝐞𝐦𝐛𝐞𝐫𝐬:* ${metadata?.participants?.length || '?'}\n> *𝐋𝐢𝐧𝐤:*\n> https://chat.whatsapp.com/${inviteCode}\n╰──────────────────☉\n\n*Here is your precious link. Do not share it with weirdos.*` + FOOTER
+                text: `╭───(    \`𝐆𝐫𝐨𝐮𝐩 𝐋𝐢𝐧𝐤\`    )───\n> *𝐆𝐫𝐨𝐮𝐩:* ${metadata?.subject || 'Unknown'}\n> *𝐌𝐞𝐦𝐛𝐞𝐫𝐬:* ${metadata?.participants?.length || '?'}\n> *𝐋𝐢𝐧𝐤:*\n> https://chat.whatsapp.com/${inviteCode}\n╰──────────────────☉\n\n*Here is your precious link. Do not share it with weirdos.*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to get the group link. Maybe try again when the stars align.*' + FOOTER
+                text: '*Failed to get the group link. Maybe try again when the stars align.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

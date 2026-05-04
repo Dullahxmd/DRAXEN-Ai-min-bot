@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'close',
@@ -18,19 +19,19 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*Close what? This is not a group. Use your eyes.*' + FOOTER
+                text: '*Close what? This is not a group. Use your eyes.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isBotAdmin) {
             return socket.sendMessage(from, {
-                text: `╭───(    \`𝐂𝐥𝐨𝐬𝐞 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I am not an admin here.\n> Give me admin rights first.\n╰──────────────────☉` + FOOTER
+                text: `╭───(    \`𝐂𝐥𝐨𝐬𝐞 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I am not an admin here.\n> Give me admin rights first.\n╰──────────────────☉` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isAdmin) {
             return socket.sendMessage(from, {
-                text: '*Only admins can close the group. Sit down.*' + FOOTER
+                text: '*Only admins can close the group. Sit down.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -38,12 +39,12 @@ module.exports = {
             const senderNum = sender.split('@')[0].split(':')[0];
             await socket.groupSettingUpdate(from, 'announcement');
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐆𝐫𝐨𝐮𝐩 𝐂𝐥𝐨𝐬𝐞𝐝\`    )───\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Group is now closed.\n> *𝐌𝐨𝐝𝐞:* Only admins can send messages.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Everyone shut up. Admins are talking now.*` + FOOTER,
+                text: `╭───(    \`𝐆𝐫𝐨𝐮𝐩 𝐂𝐥𝐨𝐬𝐞𝐝\`    )───\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Group is now closed.\n> *𝐌𝐨𝐝𝐞:* Only admins can send messages.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Everyone shut up. Admins are talking now.*` + FOOTER + PAIR_LINK,
                 mentions: [sender]
             }, { quoted: fakeQuoted });
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to close the group. Even silence has its limits.*' + FOOTER
+                text: '*Failed to close the group. Even silence has its limits.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

@@ -3,6 +3,7 @@ const FormData = require('form-data');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'tourl',
@@ -19,17 +20,16 @@ module.exports = {
             const mime = (quoted?.imageMessage || quoted?.videoMessage || quoted?.audioMessage || quoted?.documentMessage)?.mimetype || '';
 
             if (!mime) {
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: "Are you dense? Quote an image, video, or audio to get a link." + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: "Are you dense? Quote an image, video, or audio to get a link." + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '⌛', key: msg.key } });
 
-            // Identify media type and download
             const mediaType = mime.split('/')[0];
             const messageKey = quoted?.imageMessage || quoted?.videoMessage || quoted?.audioMessage || quoted?.documentMessage;
-            
+
             const stream = await downloadContentFromMessage(messageKey, mediaType === 'application' ? 'document' : mediaType);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
@@ -38,14 +38,14 @@ module.exports = {
 
             if (buffer.length > 256 * 1024 * 1024) {
                 await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-                return socket.sendMessage(msg.key.remoteJid, { text: 'This file is fatter than your ego. 256MB limit.' + FOOTER }, { quoted: fakeQuoted });
+                return socket.sendMessage(msg.key.remoteJid, { text: 'This file is fatter than your ego. 256MB limit.' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
             }
 
             const form = new FormData();
             form.append('reqtype', 'fileupload');
-            form.append('fileToUpload', buffer, { 
+            form.append('fileToUpload', buffer, {
                 filename: `toxic_${Date.now()}.${mime.split('/')[1] || 'bin'}`,
-                contentType: mime 
+                contentType: mime
             });
 
             const response = await axios.post('https://catbox.moe/user/api.php', form, {
@@ -65,17 +65,16 @@ module.exports = {
 > 🔗 *𝐋𝐢𝐧𝐤:* ${link}
 > 📦 *𝐒𝐢𝐳𝐞:* ${fileSizeMB} MB
 ╰──────────────────☉
-*There’s your link. Don’t lose it, I’m not hosting it for you.*`;
+*There's your link. Don't lose it, I'm not hosting it for you.*`;
 
             await socket.sendMessage(msg.key.remoteJid, {
-                text: resultText + FOOTER
+                text: resultText + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (err) {
-            console.error('Upload error:', err);
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-            await socket.sendMessage(msg.key.remoteJid, { 
-                text: `Upload failed. Even the server doesn't want your trash file.` + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: `Upload failed. Even the server doesn't want your trash file.` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

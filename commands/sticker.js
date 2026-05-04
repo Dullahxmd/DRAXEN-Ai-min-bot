@@ -4,6 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'sticker',
@@ -46,14 +47,14 @@ module.exports = {
             if (!mediaMessage) {
                 await socket.sendMessage(from, { react: { text: '❌', key: msg.key } });
                 return socket.sendMessage(from, {
-                    text: 'Send or reply to an image or short video, genius. I can\'t make a sticker out of thin air.' + FOOTER
+                    text: 'Send or reply to an image or short video, genius. I can\'t make a sticker out of thin air.' + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
             if (mediaType === 'video' && mediaMessage.seconds > 30) {
                 await socket.sendMessage(from, { react: { text: '❌', key: msg.key } });
                 return socket.sendMessage(from, {
-                    text: 'That video is too long. Keep it under 30 seconds or learn to trim your content.' + FOOTER
+                    text: 'That video is too long. Keep it under 30 seconds or learn to trim your content.' + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -85,10 +86,9 @@ module.exports = {
             await fs.unlink(tempFile).catch(() => {});
 
         } catch (error) {
-            console.error('Sticker Error:', error);
             await socket.sendMessage(from, { react: { text: '❌', key: msg.key } });
             await socket.sendMessage(from, {
-                text: 'Sticker creation flopped. Either the file is corrupted or the universe hates you. Try again.' + FOOTER
+                text: 'Sticker creation flopped. Either the file is corrupted or the universe hates you. Try again.' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

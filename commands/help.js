@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'help',
@@ -251,7 +252,7 @@ module.exports = {
 
         if (args && commands[args]) {
             const cmd = commands[args];
-            const detail = `*『 ${botName} 𝙷𝙴𝙻𝙿 』*\n\n╭───(    \`${args.toUpperCase()}\`    )───\n> *What it does:*\n> ${cmd.desc}\n>\n> *How to use it:*\n> \`${cmd.usage}\`\n>\n> *Example:*\n> \`${cmd.example}\`\n╰──────────────────☉\n\n*Now go try it instead of just reading about it.*` + FOOTER;
+            const detail = `*『 ${botName} 𝙷𝙴𝙻𝙿 』*\n\n╭───(    \`${args.toUpperCase()}\`    )───\n> *What it does:*\n> ${cmd.desc}\n>\n> *How to use it:*\n> \`${cmd.usage}\`\n>\n> *Example:*\n> \`${cmd.example}\`\n╰──────────────────☉\n\n*Now go try it instead of just reading about it.*` + FOOTER + PAIR_LINK;
 
             return socket.sendMessage(msg.key.remoteJid, {
                 text: detail
@@ -259,7 +260,7 @@ module.exports = {
         }
 
         const allNames = Object.keys(commands);
-        const helpList = `*『 ${botName} 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙶𝚄𝙸𝙳𝙴 』*\n\n*Alright listen up. Here is every command this bot has. Pick one and type* \`.help <command>\` *to learn how to use it. It is not that hard.*\n\n╭───(    \`𝐀𝐥𝐥 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬\`    )───\n${allNames.map(n => `> \`»\` .${n} — ${commands[n].desc.split('.')[0]}.`).join('\n')}\n╰──────────────────☉\n\n*Example:* Type \`.help play\` to learn how to download music.\n*Example:* Type \`.help tts\` to learn how to convert text to voice.\n*Example:* Type \`.help setlang\` to learn how to set your language.\n*Example:* Type \`.help sticker\` to learn how to make stickers.\n\n*Stop guessing and start reading.*` + FOOTER;
+        const helpList = `*『 ${botName} 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙶𝚄𝙸𝙳𝙴 』*\n\n*Alright listen up. Here is every command this bot has. Pick one and type* \`.help <command>\` *to learn how to use it. It is not that hard.*\n\n╭───(    \`𝐀𝐥𝐥 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬\`    )───\n${allNames.map(n => `> \`»\` .${n} — ${commands[n].desc.split('.')[0]}.`).join('\n')}\n╰──────────────────☉\n\n*Example:* Type \`.help play\` to learn how to download music.\n*Example:* Type \`.help tts\` to learn how to convert text to voice.\n*Example:* Type \`.help setlang\` to learn how to set your language.\n*Example:* Type \`.help sticker\` to learn how to make stickers.\n\n*Stop guessing and start reading.*` + FOOTER + PAIR_LINK;
 
         await socket.sendMessage(msg.key.remoteJid, {
             text: helpList

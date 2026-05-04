@@ -1,4 +1,5 @@
-const FOOTER = '\n\n> Draxen ai is fast';
+const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'alive',
@@ -22,12 +23,10 @@ module.exports = {
 > \`»\` 𝐌𝐞𝐦𝐨𝐫𝐲 : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 ╰──────────────────☉
 
-*Yeah I'm alive, unlike your social life. Stop checking on me and do something productive for once.*
-
-> Draxen is fast`;
+*Yeah I'm alive, unlike your social life. Stop checking on me and do something productive for once.*`;
 
         await socket.sendMessage(msg.key.remoteJid, {
-            text: statusText
+            text: statusText + FOOTER + PAIR_LINK
         }, { quoted: fakeQuoted });
     }
 };

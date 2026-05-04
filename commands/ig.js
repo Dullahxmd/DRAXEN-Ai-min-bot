@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'ig',
@@ -15,8 +16,8 @@ module.exports = {
         const url = args[1];
 
         if (!url || !url.includes("instagram.com")) {
-return socket.sendMessage(msg.key.remoteJid, { 
-                text: "Link is missing or garbage. Give me a proper Instagram link." + FOOTER 
+            return socket.sendMessage(msg.key.remoteJid, {
+                text: "Link is missing or garbage. Give me a proper Instagram link." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -28,7 +29,7 @@ return socket.sendMessage(msg.key.remoteJid, {
                 params: { url: url }
             });
 
-const botName = cfg.botName || 'DRAXEN-Ai';
+            const botName = cfg.botName || 'DRAXEN-Ai';
             const videoUrl = data.result?.[0]?.url_download;
 
             if (!videoUrl) {
@@ -44,21 +45,16 @@ const botName = cfg.botName || 'DRAXEN-Ai';
 > \`»\` 𝐏𝐥𝐚𝐭𝐟𝐨𝐫𝐦 : Instagram
 ╰──────────────────☉
 
-*Downloaded by ${botName}*
-
-
-> Draxen is fast`;
+*Downloaded by ${botName}*`;
 
             await socket.sendMessage(msg.key.remoteJid, {
                 video: { url: videoUrl },
-                caption: caption + FOOTER
+                caption: caption + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (error) {
-            console.error('Instagram Error:', error);
-            
-await socket.sendMessage(msg.key.remoteJid, { 
-                text: "Instagram service failed. Link might be private or broken." + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: "Instagram service failed. Link might be private or broken." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

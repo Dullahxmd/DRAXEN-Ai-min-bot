@@ -1,5 +1,8 @@
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
+const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
+
 module.exports = {
     name: 'gstatus',
     async execute(socket, msg, number, config, loadUserConfigFromMongo, activeSockets, socketCreationTime, extras) {
@@ -15,7 +18,7 @@ module.exports = {
         };
 
         if (!isGroup) {
-            return socket.sendMessage(from, { text: `*This command is for groups only.*` }, { quoted: fakeQuoted });
+            return socket.sendMessage(from, { text: `*This command is for groups only.*` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
 
         try {
@@ -50,7 +53,7 @@ module.exports = {
             } else if (caption) {
                 await socket.sendMessage(from, { groupStatusMessage: { text: caption } });
             } else {
-                return socket.sendMessage(from, { text: `*Reply to media or add text to post a status.*` }, { quoted: fakeQuoted });
+                return socket.sendMessage(from, { text: `*Reply to media or add text to post a status.*` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
             }
 
             const successText = `*📡 ${botName} Sᴛᴀᴛᴜs Uᴘʟᴏᴀᴅ*
@@ -65,12 +68,11 @@ module.exports = {
 *Status has been deployed to the group feed.*`;
 
             await socket.sendMessage(from, {
-                text: successText
+                text: successText + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (error) {
-            console.error("GStatus Error:", error);
-            await socket.sendMessage(from, { text: `*Error:* ${error.message}` }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: `*Error:* ${error.message}` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

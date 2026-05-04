@@ -1,6 +1,7 @@
 const googleTTS = require('google-tts-api');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'tts',
@@ -23,7 +24,7 @@ module.exports = {
 
         if (!text) {
             return socket.sendMessage(from, {
-                text: "Oh wow, you used .tts and gave me NOTHING. Genius level IQ right there. Either type something after the command or reply to a message, you absolute muppet." + FOOTER
+                text: "Oh wow, you used .tts and gave me NOTHING. Genius level IQ right there. Either type something after the command or reply to a message, you absolute muppet." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -47,7 +48,7 @@ module.exports = {
         } catch (error) {
             await socket.sendMessage(from, { react: { text: '❌', key: msg.key } });
             await socket.sendMessage(from, {
-                text: `TTS failed. Even Google doesn't want to speak your words. Fix your life.\nError: ${error.message}` + FOOTER
+                text: `TTS failed. Even Google doesn't want to speak your words. Fix your life.\nError: ${error.message}` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

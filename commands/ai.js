@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const FOOTER = '\n\n> Draxen ai is fast';
-const PAIR_LINK = '\n\n*Free MiniBot Pair*: https://dullahxmd-v2.vercel.app/';
+const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'ai',
@@ -15,7 +15,7 @@ module.exports = {
         const prompt = text.split(' ').slice(1).join(' ').trim();
 
         if (!prompt) {
-return socket.sendMessage(msg.key.remoteJid, { 
+            return socket.sendMessage(msg.key.remoteJid, {
                 text: "Where is your prompt? You managed to type the command but forgot the question. Amazing." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
@@ -39,16 +39,14 @@ return socket.sendMessage(msg.key.remoteJid, {
 
             const botName = cfg.botName || 'DRAXEN-Ai';
 
-const messageText = `*[ DRAXEN-AI RESPONSE ]*\n\n${data.result}\n\n—\n${botName} • GPT-4O\n\n\n> Draxen is fast` + PAIR_LINK;
+            const messageText = `*[ DRAXEN-AI RESPONSE ]*\n\n${data.result}\n\n—\n${botName} • GPT-4O` + FOOTER + PAIR_LINK;
 
             await socket.sendMessage(msg.key.remoteJid, {
                 text: messageText
             }, { quoted: fakeQuoted });
 
         } catch (error) {
-            console.error('GPT Error:', error);
-
-await socket.sendMessage(msg.key.remoteJid, { 
+            await socket.sendMessage(msg.key.remoteJid, {
                 text: "AI failed. Maybe your question was too stupid even for AI." + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }

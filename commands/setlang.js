@@ -1,6 +1,7 @@
 const { translate } = require('@vitalets/google-translate-api');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const SUPPORTED = {
     en: 'English', fr: 'French', french: 'French', es: 'Spanish', de: 'German',
@@ -27,13 +28,13 @@ module.exports = {
         if (!lang) {
             const list = Object.entries(SUPPORTED).map(([code, name]) => `> \`»\` ${code} — ${name}`).join('\n');
             return socket.sendMessage(from, {
-                text: `╭───(    \`𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞\`    )───\n> ───≫ 🌐 SUPPORTED ≪───\n${list}\n╰──────────────────☉\n\n*Usage: .setlang fr*\n*Stop staring and just pick one.*` + FOOTER
+                text: `╭───(    \`𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞\`    )───\n> ───≫ 🌐 SUPPORTED ≪───\n${list}\n╰──────────────────☉\n\n*Usage: .setlang fr*\n*Stop staring and just pick one.*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!SUPPORTED[lang]) {
             return socket.sendMessage(from, {
-                text: `*"${lang}" is not a supported language code. Use .setlang to see the full list, genius.*` + FOOTER
+                text: `*"${lang}" is not a supported language code. Use .setlang to see the full list, genius.*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -60,12 +61,12 @@ module.exports = {
                 : '';
 
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞\`    )───\n> ───≫ ✅ UPDATED ≪───\n> \`»\` 𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞 : ${SUPPORTED[lang]}\n> \`»\` 𝐂𝐨𝐝𝐞 : ${lang}\n> \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Active\n╰──────────────────☉\n\n*All responses will now be in ${SUPPORTED[lang]}.*${confirmation ? '\n' + confirmation : ''}` + FOOTER
+                text: `╭───(    \`𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞\`    )───\n> ───≫ ✅ UPDATED ≪───\n> \`»\` 𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞 : ${SUPPORTED[lang]}\n> \`»\` 𝐂𝐨𝐝𝐞 : ${lang}\n> \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Active\n╰──────────────────☉\n\n*All responses will now be in ${SUPPORTED[lang]}.*${confirmation ? '\n' + confirmation : ''}` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
 
         } catch (error) {
             await socket.sendMessage(from, {
-                text: `*Failed to save language. The database is throwing a tantrum.\nError: ${error.message}*` + FOOTER
+                text: `*Failed to save language. The database is throwing a tantrum.\nError: ${error.message}*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

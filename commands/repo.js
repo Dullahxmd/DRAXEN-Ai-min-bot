@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'repo',
@@ -14,13 +15,11 @@ module.exports = {
 ╭───(    \`𝚂𝚢𝚜𝚝𝚎𝚖 𝙸𝚗𝚏𝚘\`    )───
 > ───≫ 🔗 MINI-BOT-INFO ≫ <<───
 > \`»\` 𝐎𝐰𝐧𝐞𝐫 : Dullah
-> \`»\` 𝐋𝐢𝐧𝐤 : 
+> \`»\` 𝐋𝐢𝐧𝐤 : https://dullahxmd-v2.vercel.app
 > \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Public/Stable
 ╰──────────────────☉
 
-*Powered by Dullah*
-
-> Draxen is fast`;
+*Powered by Dullah*` + FOOTER + PAIR_LINK;
 
         await socket.sendMessage(msg.key.remoteJid, {
             text: text

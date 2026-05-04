@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const DEV_NUMBER = '255716945971';
 
@@ -41,9 +42,9 @@ module.exports = {
         const isAdmin = extras?.isAdmin || false;
         const isDev = extras?.isDev || false;
 
-        if (!isGroup) return socket.sendMessage(from, { text: '*Promote who? This is not a group chat, Einstein.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me admin first before asking me to promote anyone.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*You are not an admin. Stop pretending to have power.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!isGroup) return socket.sendMessage(from, { text: '*Promote who? This is not a group chat, Einstein.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me admin first before asking me to promote anyone.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*You are not an admin. Stop pretending to have power.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const metadata = extras?.groupMetadata || await socket.groupMetadata(from).catch(() => null);
         const participants = metadata?.participants || [];
@@ -59,10 +60,10 @@ module.exports = {
             if (args[0]) rawJid = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net';
         }
 
-        if (!rawJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to promote.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!rawJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to promote.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const targetJid = resolveTarget(rawJid, participants);
-        if (!targetJid) return socket.sendMessage(from, { text: '*Could not find that user in this group.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!targetJid) return socket.sendMessage(from, { text: '*Could not find that user in this group.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const targetNum = targetJid.split('@')[0];
         const senderNum = normalizeNum(sender);
@@ -70,11 +71,11 @@ module.exports = {
         try {
             await socket.groupParticipantsUpdate(from, [targetJid], 'promote');
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐏𝐫𝐨𝐦𝐨𝐭𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${targetNum}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Promoted to Admin.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Congratulations, you now have power.*` + FOOTER,
+                text: `╭───(    \`𝐏𝐫𝐨𝐦𝐨𝐭𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* @${targetNum}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Promoted to Admin.\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*Congratulations, you now have power.*` + FOOTER + PAIR_LINK,
                 mentions: [targetJid, sender]
             }, { quoted: fakeQuoted });
         } catch (error) {
-            await socket.sendMessage(from, { text: '*Failed to promote that user.*' + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: '*Failed to promote that user.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'weather',
@@ -17,8 +18,8 @@ module.exports = {
             const text = body.split(' ').slice(1).join(' ').trim();
 
             if (!text) {
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: `Yo, genius, give me a city name! Don’t waste my time.` + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: `Yo, genius, give me a city name! Don't waste my time.` + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -43,11 +44,11 @@ module.exports = {
 ╰──────────────────☉
 *There you go. Now stop asking for the obvious.*`;
 
-            await socket.sendMessage(msg.key.remoteJid, { text: weatherReport + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(msg.key.remoteJid, { text: weatherReport + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         } catch (e) {
-            await socket.sendMessage(msg.key.remoteJid, { 
-                text: `What the hell? Can’t find that place. Pick a real city, idiot.` + FOOTER 
+            await socket.sendMessage(msg.key.remoteJid, {
+                text: `What the hell? Can't find that place. Pick a real city, idiot.` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

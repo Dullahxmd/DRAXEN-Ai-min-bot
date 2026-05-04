@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'hidetag',
@@ -16,13 +17,13 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*Hidetag only works in groups. Who are you trying to tag in a DM?*' + FOOTER
+                text: '*Hidetag only works in groups. Who are you trying to tag in a DM?*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isAdmin) {
             return socket.sendMessage(from, {
-                text: '*Only admins can use hidetag. You do not have that privilege.*' + FOOTER
+                text: '*Only admins can use hidetag. You do not have that privilege.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -35,7 +36,7 @@ module.exports = {
             await socket.sendMessage(from, { text, mentions });
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to send hidetag. Even the shadows betray me sometimes.*' + FOOTER
+                text: '*Failed to send hidetag. Even the shadows betray me sometimes.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

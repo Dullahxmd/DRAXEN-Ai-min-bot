@@ -2,6 +2,7 @@ const yts = require("yt-search");
 const axios = require("axios");
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'video',
@@ -18,8 +19,8 @@ module.exports = {
             const text = body.split(' ').slice(1).join(' ').trim();
 
             if (!text) {
-                return socket.sendMessage(msg.key.remoteJid, { 
-                    text: "Are you mute? Give me a video name." + FOOTER 
+                return socket.sendMessage(msg.key.remoteJid, {
+                    text: "Are you mute? Give me a video name." + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -30,7 +31,7 @@ module.exports = {
 
             if (!video) {
                 await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-                return socket.sendMessage(msg.key.remoteJid, { text: `Nothing found. Your taste is nonexistent.` + FOOTER }, { quoted: fakeQuoted });
+                return socket.sendMessage(msg.key.remoteJid, { text: `Nothing found. Your taste is nonexistent.` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
             }
 
             const { data } = await axios.get(`https://api.ootaizumi.web.id/downloader/youtube?url=${encodeURIComponent(video.url)}&format=720`);
@@ -46,13 +47,12 @@ module.exports = {
                 video: { url: videoUrl },
                 mimetype: "video/mp4",
                 fileName: `${title}.mp4`,
-                caption: `🎬 *${title}*\n—\n*Draxen-ai*\n\n\n> Draxen is fast`,
-
+                caption: `🎬 *${title}*\n—\n*Draxen-ai*` + FOOTER + PAIR_LINK,
             }, { quoted: fakeQuoted });
 
         } catch (error) {
             await socket.sendMessage(msg.key.remoteJid, { react: { text: '❌', key: msg.key } });
-            await socket.sendMessage(msg.key.remoteJid, { text: `Download failed. The universe despises your choice.` + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(msg.key.remoteJid, { text: `Download failed. The universe despises your choice.` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

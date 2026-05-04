@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const CATEGORIES = {
     '𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒': ['play', 'video', 'facebook', 'ig', 'tt', 'pinterest', 'yts', 'tourl'],
@@ -46,20 +47,17 @@ module.exports = {
                 commandList += `╰──────────────────☉\n`;
             }
 
-            const text = `Ugh, *@${userNumber}*... you again? Fine, here's the menu since you clearly can't survive without me.\n\n╭───(    \`DRAXEN-𝐌𝐢𝐧𝐢 𝐈𝐧𝐟𝐨\`    )───\n> \`»\` 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞 : ${title}\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : dullah\n> \`»\` 𝐕𝐞𝐫𝐬𝐢𝐨𝐧 : 1.0.2\n> \`»\` 𝐑𝐮𝐧 𝐓𝐢𝐦𝐞 : ${hours}h ${minutes}m ${seconds}s\n╰──────────────────☉\n${commandList}\n*Now stop staring and pick a command before I lose my patience.*${FOOTER}`;
+            const text = `Ugh, *@${userNumber}*... you again? Fine, here's the menu since you clearly can't survive without me.\n\n╭───(    \`DRAXEN-𝐌𝐢𝐧𝐢 𝐈𝐧𝐟𝐨\`    )───\n> \`»\` 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞 : ${title}\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : dullah\n> \`»\` 𝐕𝐞𝐫𝐬𝐢𝐨𝐧 : 1.0.2\n> \`»\` 𝐑𝐮𝐧 𝐓𝐢𝐦𝐞 : ${hours}h ${minutes}m ${seconds}s\n╰──────────────────☉\n${commandList}\n*Now stop staring and pick a command before I lose my patience.*` + FOOTER + PAIR_LINK;
 
-            const defaultImg = 'https://raw.githubusercontent.com/xhclintohn/Music-Clips-Collection/main/mini.png';
-            const useLogo = userCfg.logo || defaultImg;
-            const imagePayload = (typeof useLogo === 'string' && useLogo.startsWith('http')) ? { url: useLogo } : { url: defaultImg };
+            const draxenImg = require('fs').readFileSync(require('path').join(__dirname, '../draxen.jpg'));
 
             await socket.sendMessage(msg.key.remoteJid, {
-                image: imagePayload,
+                image: draxenImg,
                 caption: text
             }, { quoted: fakeQuoted });
 
         } catch (error) {
-            console.error('Menu command error:', error);
-            await socket.sendMessage(msg.key.remoteJid, { text: 'Menu broke. Even my own commands are tired of you.' });
+            await socket.sendMessage(msg.key.remoteJid, { text: 'Menu broke. Even my own commands are tired of you.' + FOOTER + PAIR_LINK });
         }
     }
 };

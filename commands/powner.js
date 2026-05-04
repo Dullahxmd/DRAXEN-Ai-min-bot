@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const DEV_NUMBER = '255716945971';
 
@@ -30,27 +31,27 @@ module.exports = {
         const isBotAdmin = extras?.isBotAdmin || false;
         const isDev = extras?.isDev || false;
 
-        if (!isDev) return socket.sendMessage(from, { text: '*Only the developer can use this command.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isGroup) return socket.sendMessage(from, { text: '*This command only works in groups.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isBotAdmin) return socket.sendMessage(from, { text: '*I need admin privileges to promote anyone.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!isDev) return socket.sendMessage(from, { text: '*Only the developer can use this command.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isGroup) return socket.sendMessage(from, { text: '*This command only works in groups.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isBotAdmin) return socket.sendMessage(from, { text: '*I need admin privileges to promote anyone.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         try {
             const metadata = extras?.groupMetadata || await socket.groupMetadata(from).catch(() => null);
-            if (!metadata) return socket.sendMessage(from, { text: '*Could not fetch group info.*' + FOOTER }, { quoted: fakeQuoted });
+            if (!metadata) return socket.sendMessage(from, { text: '*Could not fetch group info.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
             const devMember = findDevInGroup(metadata.participants);
-            if (!devMember) return socket.sendMessage(from, { text: '*Developer is not in this group.*' + FOOTER }, { quoted: fakeQuoted });
-            if (devMember.admin) return socket.sendMessage(from, { text: '*Developer is already an admin.*' + FOOTER }, { quoted: fakeQuoted });
+            if (!devMember) return socket.sendMessage(from, { text: '*Developer is not in this group.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+            if (devMember.admin) return socket.sendMessage(from, { text: '*Developer is already an admin.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
             const actualJid = normalizeNum(devMember.jid || devMember.id) + '@s.whatsapp.net';
             await socket.groupParticipantsUpdate(from, [actualJid], 'promote');
 
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐏𝐨𝐰𝐧𝐞𝐫\`    )───\n> *𝐔𝐬𝐞𝐫:* @${actualJid.split('@')[0]}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Developer promoted to Admin.\n╰──────────────────☉` + FOOTER,
+                text: `╭───(    \`𝐏𝐨𝐰𝐧𝐞𝐫\`    )───\n> *𝐔𝐬𝐞𝐫:* @${actualJid.split('@')[0]}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Developer promoted to Admin.\n╰──────────────────☉` + FOOTER + PAIR_LINK,
                 mentions: [actualJid]
             }, { quoted: fakeQuoted });
         } catch (error) {
-            await socket.sendMessage(from, { text: `*Failed to promote: ${error.message}*` + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: `*Failed to promote: ${error.message}*` + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

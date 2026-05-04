@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'setname',
@@ -18,19 +19,19 @@ module.exports = {
 
         if (!isGroup) {
             return socket.sendMessage(from, {
-                text: '*Set what name? This is not a group. Get it together.*' + FOOTER
+                text: '*Set what name? This is not a group. Get it together.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isBotAdmin) {
             return socket.sendMessage(from, {
-                text: `╭───(    \`𝐒𝐞𝐭𝐧𝐚𝐦𝐞 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need admin rights to change the name.\n> Promote me, then ask again.\n╰──────────────────☉` + FOOTER
+                text: `╭───(    \`𝐒𝐞𝐭𝐧𝐚𝐦𝐞 𝐅𝐚𝐢𝐥𝐞𝐝\`    )───\n> I need admin rights to change the name.\n> Promote me, then ask again.\n╰──────────────────☉` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
         if (!isAdmin) {
             return socket.sendMessage(from, {
-                text: '*Only admins can change the group name. You are just a member.*' + FOOTER
+                text: '*Only admins can change the group name. You are just a member.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
 
@@ -40,7 +41,7 @@ module.exports = {
 
             if (!newName) {
                 return socket.sendMessage(from, {
-                    text: `╭───(    \`𝐒𝐞𝐭𝐧𝐚𝐦𝐞 𝐔𝐬𝐚𝐠𝐞\`    )───\n> *𝐅𝐨𝐫𝐦𝐚𝐭:* .setname <new name>\n> *𝐄𝐱𝐚𝐦𝐩𝐥𝐞:* .setname My Awesome Group\n╰──────────────────☉\n\n*You forgot the name. What do you want me to change it to, nothing?*` + FOOTER
+                    text: `╭───(    \`𝐒𝐞𝐭𝐧𝐚𝐦𝐞 𝐔𝐬𝐚𝐠𝐞\`    )───\n> *𝐅𝐨𝐫𝐦𝐚𝐭:* .setname <new name>\n> *𝐄𝐱𝐚𝐦𝐩𝐥𝐞:* .setname My Awesome Group\n╰──────────────────☉\n\n*You forgot the name. What do you want me to change it to, nothing?*` + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -49,12 +50,12 @@ module.exports = {
             const oldName = metadata?.subject || 'Unknown';
             await socket.groupUpdateSubject(from, newName);
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐍𝐚𝐦𝐞 𝐂𝐡𝐚𝐧𝐠𝐞𝐝\`    )───\n> *𝐎𝐥𝐝:* ${oldName}\n> *𝐍𝐞𝐰:* ${newName}\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*New name, same energy. Hope it lasts longer than the last one.*` + FOOTER,
+                text: `╭───(    \`𝐍𝐚𝐦𝐞 𝐂𝐡𝐚𝐧𝐠𝐞𝐝\`    )───\n> *𝐎𝐥𝐝:* ${oldName}\n> *𝐍𝐞𝐰:* ${newName}\n> *𝐁𝐲:* @${senderNum}\n╰──────────────────☉\n\n*New name, same energy. Hope it lasts longer than the last one.*` + FOOTER + PAIR_LINK,
                 mentions: [sender]
             }, { quoted: fakeQuoted });
         } catch (error) {
             await socket.sendMessage(from, {
-                text: '*Failed to change the group name. WhatsApp said no.*' + FOOTER
+                text: '*Failed to change the group name. WhatsApp said no.*' + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         }
     }

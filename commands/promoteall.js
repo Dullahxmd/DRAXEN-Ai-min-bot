@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const normalizeNum = (jid) => {
     if (!jid) return '';
@@ -29,12 +30,12 @@ module.exports = {
         const isDev = extras?.isDev || false;
         const botNumber = extras?.botNumber || '';
 
-        if (!isGroup) return socket.sendMessage(from, { text: '*This command only works in groups.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me admin first before I can promote anyone.*' + FOOTER }, { quoted: fakeQuoted });
-        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*Only admins can use promoteall.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!isGroup) return socket.sendMessage(from, { text: '*This command only works in groups.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isBotAdmin) return socket.sendMessage(from, { text: '*Make me admin first before I can promote anyone.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
+        if (!isAdmin && !isDev) return socket.sendMessage(from, { text: '*Only admins can use promoteall.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const metadata = extras?.groupMetadata || await socket.groupMetadata(from).catch(() => null);
-        if (!metadata) return socket.sendMessage(from, { text: '*Could not fetch group info.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!metadata) return socket.sendMessage(from, { text: '*Could not fetch group info.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         const participants = metadata.participants || [];
         const botNum = normalizeNum(botNumber);
@@ -46,7 +47,7 @@ module.exports = {
             .filter(j => normalizeNum(j) !== botNum);
 
         if (toPromote.length === 0) {
-            return socket.sendMessage(from, { text: '*Everyone is already an admin. Nothing to do.*' + FOOTER }, { quoted: fakeQuoted });
+            return socket.sendMessage(from, { text: '*Everyone is already an admin. Nothing to do.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
 
         let promoted = 0;
@@ -73,7 +74,7 @@ module.exports = {
                 `╰──────────────────☉`,
                 ``,
                 `*Everyone is an admin now. Good luck.*`
-            ].filter(l => l !== null).join('\n') + FOOTER,
+            ].filter(l => l !== null).join('\n') + FOOTER + PAIR_LINK,
             mentions: [sender, ...toPromote]
         }, { quoted: fakeQuoted });
     }

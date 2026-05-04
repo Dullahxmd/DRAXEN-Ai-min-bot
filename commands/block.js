@@ -1,4 +1,5 @@
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const resolveTarget = (jid, participants) => {
     if (!jid) return null;
@@ -32,7 +33,7 @@ module.exports = {
         const isOwner = extras?.isOwner || false;
         const isDev = extras?.isDev || false;
 
-        if (!isOwner && !isDev) return socket.sendMessage(from, { text: '*Only the owner can block users.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!isOwner && !isDev) return socket.sendMessage(from, { text: '*Only the owner can block users.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         let targetJid = null;
 
@@ -48,15 +49,15 @@ module.exports = {
             targetJid = from;
         }
 
-        if (!targetJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to block.*' + FOOTER }, { quoted: fakeQuoted });
+        if (!targetJid) return socket.sendMessage(from, { text: '*Tag or reply to the user you want to block.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
 
         try {
             await socket.updateBlockStatus(targetJid, 'block');
             await socket.sendMessage(from, {
-                text: `╭───(    \`𝐁𝐥𝐨𝐜𝐤𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* ${targetJid.split('@')[0]}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Blocked.\n╰──────────────────☉\n\n*Goodbye. Don't come back.*` + FOOTER
+                text: `╭───(    \`𝐁𝐥𝐨𝐜𝐤𝐞𝐝\`    )───\n> *𝐔𝐬𝐞𝐫:* ${targetJid.split('@')[0]}\n> *𝐒𝐭𝐚𝐭𝐮𝐬:* Blocked.\n╰──────────────────☉\n\n*Goodbye. Don't come back.*` + FOOTER + PAIR_LINK
             }, { quoted: fakeQuoted });
         } catch (error) {
-            await socket.sendMessage(from, { text: '*Failed to block that user.*' + FOOTER }, { quoted: fakeQuoted });
+            await socket.sendMessage(from, { text: '*Failed to block that user.*' + FOOTER + PAIR_LINK }, { quoted: fakeQuoted });
         }
     }
 };

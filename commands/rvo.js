@@ -1,6 +1,7 @@
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 const FOOTER = '\n\n> Draxen is fast';
+const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 module.exports = {
     name: 'rvo',
@@ -15,17 +16,15 @@ module.exports = {
                 contextInfo: { mentionedJid: [], forwardingScore: 999, isForwarded: true }
             };
 
-            // Grab quoted message — works on both Android and iOS
             const contextInfo = msg.message?.extendedTextMessage?.contextInfo;
             const quoted = contextInfo?.quotedMessage;
 
             if (!quoted) {
                 return socket.sendMessage(from, {
-                    text: "Reply to a view-once message, genius. How hard is that?" + FOOTER
+                    text: "Reply to a view-once message, genius. How hard is that?" + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
-            // Check all possible view-once containers (Android vs iOS structure differs)
             const voMessage =
                 quoted?.viewOnceMessageV2?.message ||
                 quoted?.viewOnceMessageV2Extension?.message ||
@@ -42,7 +41,7 @@ module.exports = {
 
             if (!imageMsg && !videoMsg) {
                 return socket.sendMessage(from, {
-                    text: "That's not a view-once message. Stop wasting my time." + FOOTER
+                    text: "That's not a view-once message. Stop wasting my time." + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -51,10 +50,9 @@ module.exports = {
             const mediaType = imageMsg ? 'image' : 'video';
             const mediaContent = imageMsg || videoMsg;
 
-            // iOS sometimes strips directPath — handle gracefully
             if (!mediaContent.directPath && !mediaContent.url) {
                 return socket.sendMessage(from, {
-                    text: "I can see the message but can't download it. iOS might have already expired it." + FOOTER
+                    text: "I can see the message but can't download it. iOS might have already expired it." + FOOTER + PAIR_LINK
                 }, { quoted: fakeQuoted });
             }
 
@@ -66,7 +64,7 @@ module.exports = {
 
             await socket.sendMessage(from, { react: { text: '✅', key: msg.key } });
 
-            const caption = `🥀\n—\n*DRAXEN-Ai*\n\n> Imagine trying to hide this from me. Pathetic.`;
+            const caption = `🥀\n—\n*DRAXEN-Ai*\n\n> Imagine trying to hide this from me. Pathetic.` + FOOTER + PAIR_LINK;
 
             if (imageMsg) {
                 await socket.sendMessage(from, { image: buffer, caption }, { quoted: fakeQuoted });
@@ -75,10 +73,9 @@ module.exports = {
             }
 
         } catch (error) {
-            console.error('VV Error:', error);
             await socket.sendMessage(msg.key.remoteJid, {
-                text: "Couldn't grab it. The media probably expired or iOS is being a pain." + FOOTER
-            }, { quoted: fakeQuoted });
+                text: "Couldn't grab it. The media probably expired or iOS is being a pain." + FOOTER + PAIR_LINK
+            });
         }
     }
 };
