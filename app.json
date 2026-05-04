@@ -1,22 +1,16 @@
 {
-    "name": "draxen-ai-mini",
+    "name": "draxn-mini",
     "description": "mini web bot",
-    "logo": "https://raw.githubusercontent.com/xhclintohn/Music-Clips-Collection/main/mini.png",
-    "repository": "https://github.com/abdallahsalimjuma/DULLAH-XMD",
-    "keywords": ["draxen-ai-minibot", "MiniBot"],
+    "logo": "https://files.catbox.moe/xddplb.jpg",
+    "repository": "https://github.com/dullah/hg",
+    "keywords": [
+        "dmlminibot",
+        "MiniBot"
+    ],
     "success_url": "/",
-    "formation": {
-        "web": {
-            "quantity": 1,
-            "size": "standard-1x"
-        }
-    },
     "buildpacks": [
         {
-            "url": "heroku-community/apt"
-        },
-        {
-            "url": "heroku/nodejs"
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
         }
     ],
     "addons": [
