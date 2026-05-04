@@ -1,4 +1,4 @@
-const FOOTER = '\n\n> Draxen is fast';
+const FOOTER = '\n\n> Draxen ai is fast';
 const PAIR_LINK = '\n> 🔗 Pair: https://dullahxmd-v2.vercel.app';
 
 const CATEGORIES = {
