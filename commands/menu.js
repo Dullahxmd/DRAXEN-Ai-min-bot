@@ -47,7 +47,7 @@ module.exports = {
                 commandList += `╰──────────────────☉\n`;
             }
 
-            const text = `Ugh, *@${userNumber}*... you again? Fine, here's the menu since you clearly can't survive without me.\n\n╭───(    \`DRAXEN-𝐌𝐢𝐧𝐢 𝐈𝐧𝐟𝐨\`    )───\n> \`»\` 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞 : ${title}\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : dullah\n> \`»\` 𝐕𝐞𝐫𝐬𝐢𝐨𝐧 : 1.0.2\n> \`»\` 𝐑𝐮𝐧 𝐓𝐢𝐦𝐞 : ${hours}h ${minutes}m ${seconds}s\n╰──────────────────☉\n${commandList}\n*Now stop staring and pick a command before I lose my patience.*` + FOOTER + PAIR_LINK;
+            const text = `Ugh, *@${userNumber}*... you again? Fine, here's the menu since you clearly can't survive without me.\n\n╭───(    \`DRAXEN-Ai-𝐌𝐢𝐧𝐢 𝐈𝐧𝐟𝐨\`    )───\n> \`»\` 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞 : ${title}\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : dullah\n> \`»\` 𝐕𝐞𝐫𝐬𝐢𝐨𝐧 : 1.0.2\n> \`»\` 𝐑𝐮𝐧 𝐓𝐢𝐦𝐞 : ${hours}h ${minutes}m ${seconds}s\n╰──────────────────☉\n${commandList}\n*Now stop staring and pick a command before I lose my patience.*` + FOOTER + PAIR_LINK;
 
             const draxenImg = require('fs').readFileSync(require('path').join(__dirname, '../draxen.jpg'));
 
