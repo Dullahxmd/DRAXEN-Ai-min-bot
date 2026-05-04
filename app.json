@@ -16,6 +16,9 @@
     },
     "buildpacks": [
         {
+            "url": "https://github.com/heroku/heroku-buildpack-git.git"
+        },
+        {
             "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
         }
     ],
@@ -32,7 +35,6 @@
             "required": false
         },
         "DATABASE_URL": {
-            "description": "PostgreSQL database URL (auto-configured by Heroku Postgres)",
             "description": "PostgreSQL database URL (auto-configured by Heroku Postgres)",
             "required": false
         }
