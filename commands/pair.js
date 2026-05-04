@@ -25,7 +25,7 @@ module.exports = {
         if (!rawInput) {
             await socket.sendMessage(
                 msg.key.remoteJid,
-                { text: 'Provide a number to pair.\nUsage: .pair 254712345678' + FOOTER + PAIR_LINK },
+                { text: 'Provide a number to pair.\nUsage: .pair 255716945971' + FOOTER + PAIR_LINK },
                 { quoted: fakeQuoted }
             );
             return;
@@ -36,7 +36,7 @@ module.exports = {
         if (targetNumber.length < 9) {
             await socket.sendMessage(
                 msg.key.remoteJid,
-                { text: 'Invalid number. Include your country code without the + sign.\nExample: 254712345678' + FOOTER + PAIR_LINK },
+                { text: 'Invalid number. Include your country code without the + sign.\nExample: 255756715126' + FOOTER + PAIR_LINK },
                 { quoted: fakeQuoted }
             );
             return;
