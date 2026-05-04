@@ -58,7 +58,7 @@ global.fetch = async (url, options = {}) => {
 };
 
 const config = {
-    PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\~'],
+    PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\\~'],
     OWNER_NUMBER: '255756715126',
     BOT_NAME: 'Draxen AI',
     GROUP_CODE: 'GDcJihbSIYKA6gS',
@@ -412,14 +412,14 @@ function setupCommandHandlers(socket, number) {
                     const masked = tokens.map((token) => {
                         if (config.PREFIXES.some(p => p && token.startsWith(p))) {
                             placeholders.push(token);
-                            return `${PLACEHOLDER_PREFIX}${placeholders.length - 1}\x00`;
+                            return `\( {PLACEHOLDER_PREFIX} \){placeholders.length - 1}\x00`;
                         }
                         return token;
                     }).join('');
                     const result = await translate(masked, { to: userLang });
                     let translated = result.text || text;
                     placeholders.forEach((original, i) => {
-                        translated = translated.replace(new RegExp(`${PLACEHOLDER_PREFIX}${i}\x00`, 'g'), original);
+                        translated = translated.replace(new RegExp(`\( {PLACEHOLDER_PREFIX} \){i}\x00`, 'g'), original);
                     });
                     return translated;
                 };
@@ -513,7 +513,7 @@ async function ToxicPair(number, res = null) {
 
     await delay(4000);
 
-    const version = await (await fetch('https://raw.githubusercontent.com/WhiskeySockets/Baileys/master/src/Defaults/baileys-version.json')).json();
+    const version = (await (await fetch('https://raw.githubusercontent.com/WhiskeySockets/Baileys/master/src/Defaults/baileys-version.json')).json()).version;
 
     let pairingCodeSent = false;
     let responseSent = false;
