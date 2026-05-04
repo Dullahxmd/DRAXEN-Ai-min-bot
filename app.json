@@ -1,0 +1,40 @@
+{
+    "name": "draxen-ai-mini",
+    "description": "mini web bot",
+    "logo": "https://raw.githubusercontent.com/xhclintohn/Music-Clips-Collection/main/mini.png",
+    "repository": "https://github.com/abdallahsalimjuma/DULLAH-XMD",
+    "keywords": [
+        "draxen-ai-minibot",
+        "MiniBot"
+    ],
+    "success_url": "/",
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "standard-1x"
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
+        }
+    ],
+    "addons": [
+        {
+            "plan": "heroku-postgresql",
+            "as": "DATABASE"
+        }
+    ],
+    "env": {
+        "PORT": {
+            "description": "Port for web app.4000,5000,3000... any!",
+            "value": "3000",
+            "required": false
+        },
+        "DATABASE_URL": {
+            "description": "PostgreSQL database URL (auto-configured by Heroku Postgres)",
+            "description": "PostgreSQL database URL (auto-configured by Heroku Postgres)",
+            "required": false
+        }
+    }
+}
