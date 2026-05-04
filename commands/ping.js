@@ -21,7 +21,7 @@ module.exports = {
 
         const text = `*📡 ${botName} Pɪɴɢ Nᴏᴡ*
 
-╭───(    \`𝐓𝐨𝐱𝐢𝐜-𝐌𝐢𝐧𝐢 𝐒𝐭𝐚𝐭𝐬\`    )───
+╭───(    \`DRAXEN-Ai-Mini 𝐒𝐭𝐚𝐭𝐬\`    )───
 > ───≫ ⚡ Pɪɴɢ ⚡ <<───
 
 *FREE MINI-BOT PAIR LINK*
