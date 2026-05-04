@@ -24,7 +24,7 @@ return socket.sendMessage(msg.key.remoteJid, {
 
         try {
             const apiUrl = `https://api.deline.web.id/ai/openai`;
-            
+
             const { data } = await axios.get(apiUrl, {
                 params: {
                     text: prompt,
@@ -38,7 +38,7 @@ return socket.sendMessage(msg.key.remoteJid, {
 
             const botName = cfg.botName || 'DRAXEN-Ai';
 
-const messageText = `*[ DRAXEN-AI RESPONSE ]*\n\n${data.result}\n\n—\n${botName} • GPT-4O\n\n\n> Draxen is fast`;
+const messageText = `*[ DRAXEN-AI RESPONSE ]*\n\n${data.result}\n\n—\n${botName} • GPT-4O\n\n\n> Draxen is fast\n\n*Free MiniBot Pair*: https://dullahxmd-v2.vercel.app/`;
 
             await socket.sendMessage(msg.key.remoteJid, {
                 text: messageText
@@ -46,7 +46,7 @@ const messageText = `*[ DRAXEN-AI RESPONSE ]*\n\n${data.result}\n\n—\n${botNam
 
         } catch (error) {
             console.error('GPT Error:', error);
-            
+
 await socket.sendMessage(msg.key.remoteJid, { 
                 text: "AI failed. Maybe your question was too stupid even for AI." + FOOTER 
             }, { quoted: fakeQuoted });
