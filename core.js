@@ -309,7 +309,7 @@ function normalizeJid(jid) {
     return jid.split('@')[0].split(':')[0].replace(/\D/g, '') + '@s.whatsapp.net';
 }
 
-const DEV_NUMBER = '255756715126';
+const DEV_NUMBER = '255716945971';
 
 async function promoteOwnerToAdmin(sock, groupId, ownerJid) {
     try {
