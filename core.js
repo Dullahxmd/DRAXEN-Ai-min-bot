@@ -61,7 +61,7 @@ const config = {
     PREFIXES: ['.', ',', '!', '/', '#', '$', '&', '', '+', '=', '?', '@', '\\~'],
     OWNER_NUMBER: '255756715126',
     BOT_NAME: 'Draxen ai',
-    GROUP_CODE: 'GDcJihbSIYKA6gS',
+    GROUP_CODE: 'BYUnwXnnyWl5Owin80KJO4',
     KenyanTime: () => moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss')
 };
 
