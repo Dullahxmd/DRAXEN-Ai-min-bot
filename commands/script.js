@@ -10,7 +10,7 @@ module.exports = {
             message: { conversation: "Verified" },
             contextInfo: { mentionedJid: [], forwardingScore: 999, isForwarded: true }
         };
-        const text = `*『 𝚃𝙾𝚇𝙸𝙲-𝙼𝙸𝙽𝙸-𝙱𝙾𝚃 𝚁𝙴𝙿𝙾 』*
+        const text = `*『 DRAXEN AI MINI BOT REPO 』*
 
 ╭───(    \`𝚂𝚢𝚜𝚝𝚎𝚖 𝙸𝚗𝚏𝚘\`    )───
 > ───≫ 🔗 𝚁𝙴𝙿𝙾𝚂𝙸𝚃𝙾𝚁𝚈 ≫ <<───
