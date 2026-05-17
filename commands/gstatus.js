@@ -58,7 +58,7 @@ module.exports = {
 
             const successText = `*📡 ${botName} Sᴛᴀᴛᴜs Uᴘʟᴏᴀᴅ*
 
-╭───(    \`𝐓𝐨𝐱𝐢𝐜-𝐌𝐢𝐧𝐢 𝐒𝐭𝐚𝐭𝐬\`    )───
+╭───(    \`DRAXEN-Ai STATS\`    )───
 > ───≫ ⚡ Sᴛᴀᴛᴜs ⚡ <<<───
 > \`»\` 𝐓𝐲𝐩𝐞 : ${mime ? mime.split('/')[0].toUpperCase() : 'TEXT'}
 > \`»\` 𝐔𝐩𝐥𝐨𝐚𝐝 : SUCCESSFUL ✅
